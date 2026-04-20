@@ -1,98 +1,74 @@
 package entidades;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 public class Empresa {
     private String nombre;
     private List<Empleado> empleados;
 
-
-    public Empresa() {
-        empleados=new ArrayList();
+    public Empresa(){
+        empleados = new ArrayList();
     }
 
     public Empresa(String nombre) {
         this.nombre = nombre;
-        empleados=new ArrayList();
+        empleados = new ArrayList();
     }
-    public void contratarEmpleado(Empleado nuevo)
-    {
+
+    public void contratarEmpleado(Empleado nuevo){
         empleados.add(nuevo);
     }
-    public double importeTotalLiquidaciones()
-    {
-        double total=0;
-       /* for(int i=0; i<empleados.size();i++) {
-            try {
-                total += empleados.get(i).cobrarSueldo();
-            }
-            catch (EmpleadoException e)
-            {
-                total+=0;
-            }
-        }*/
+
+    public double importeTotalLiquidaciones(){
+        double total = 0;
         for(Empleado empleado:empleados){
-            try {
+            try{
                 total += empleado.cobrarSueldo();
             }
-            catch (EmpleadoException e)
-            {
-                total+=0;
+            catch (EmpleadosExceptions err){
+                total += 0;
             }
         }
-
         return total;
     }
-    public String imprimirRecibos()
-    {
-        String auxiliar="";
-        for(Empleado empleado:empleados)
-        {
-            auxiliar+=empleado.imprimirRecibo() + "\n";
-        }
-        return auxiliar;
-    }
-    public void pagarSueldos()
-    {
 
+    public String imprimirRecibos(){
+        String aux = "";
+        for(Empleado empleado:empleados){
+            aux += empleado.imprimirRecibo() + "\n";
+        }
+        return aux;
     }
-    public void despedirEmpleado(int legajo)
-    {
-       /* boolean noEncontre=true;
-        Iterator<Empleado> iterador=empleados.iterator();
-        while(iterador.hasNext()&&noEncontre)
-        {
-            Empleado empAux=iterador.next();
-            if(empAux.getLegajo()==legajo) {
-                iterador.remove();
-                noEncontre=false;
-            }
-        }*/
-        Empleado buscado=buscar(legajo);
-        if (buscado!=null)
+
+    public void despedirEmpleado(int legajo){
+        Empleado buscado = buscar(legajo);
+        if(buscado != null){
             empleados.remove(buscado);
+        }
     }
-    public void despedirEmpleado(Empleado empleado)
-    {
+
+    public Empleado buscar(int legajo){
+        boolean noEncontre = true;
+        Empleado aux = null;
+        Iterator<Empleado> iterador = empleados.iterator();
+        while(iterador.hasNext() && noEncontre){
+            aux = iterador.next();
+            if(aux.legajo == legajo){
+                noEncontre = false;
+            }
+        }
+        return aux;
+    }
+
+    public void despedirEmpleado2(Empleado empleado){
         empleados.remove(empleado);
     }
-    public Empleado buscar(int legajo)
-    {
-        boolean noEncontre=true;
-        Empleado empAux=null;
-        Iterator<Empleado> iterador=empleados.iterator();
-        while(iterador.hasNext()&&noEncontre)
-        {
-            empAux=iterador.next();
-            if(empAux.getLegajo()==legajo) {
-                noEncontre=false;
-            }
-        }
-        return empAux;
-    }
+
     public void ordenar(){
         Collections.sort(empleados);
         empleados.sort(null);
-
     }
 }

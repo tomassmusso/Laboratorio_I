@@ -2,81 +2,63 @@ package entidades;
 
 import java.util.Objects;
 
-public abstract class Empleado implements IVacacionar, Comparable<Empleado> {
-    protected String nombre;
+public abstract class Empleado implements Ivacacionar, Comparable<Empleado> {
+    private String nombre;
+    private String apellido;
     private int dni;
-    private int legajo;
+    protected int legajo;
+    private static int ultimoLegajo = 100;
 
-
-    private static int ultimoLegajo=100;
-
-
-    public Empleado()
-    {
-        super();
-    }
-    public Empleado(String nombre, int dni)
-    {
-       this.nombre=nombre;
-       this.dni=dni;
-        legajo=ultimoLegajo;
-        incrementarUltimo();
-    }
-   @Override
-    public String toString()
-    {
-        return super.toString() + "Legajo: " +legajo;
-    }
-    private static void incrementarUltimo() {
+    public Empleado(String nombre, String apellido, int dni) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.legajo = ultimoLegajo;
         ultimoLegajo++;
     }
-    public abstract double cobrarSueldo() throws EmpleadoException;
+
+    public Empleado(){}
 
     public String getNombre() {
         return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
     public int getDni() {
         return dni;
     }
 
-    public int getLegajo() {
-        return legajo;
+    public void setDni(int dni) {
+        this.dni = dni;
     }
 
-    public String imprimirRecibo()
-    {
-        return "";
-    }
     @Override
-    public int compareTo(Empleado e) {
-       /* if(this.legajo>e.legajo)
-            return 1;
-        if(this.legajo<e.legajo)
-            return -1;
-        return 0;*/
-        //return this.nombre.compareTo(e.nombre);
-        return this.legajo-e.legajo;
+    public String toString() {
+        try {
+            return "Nombre: " + nombre + " Apellido: " + apellido + " DNI: " + dni + " Legajo: " + legajo + " Sueldo Cobrado: " + "$" + cobrarSueldo();
+        } catch (EmpleadosExceptions err) {
+            System.err.println("Ocurrio un error: " + err.getMessage());
+        }
+        return "Nombre: " + nombre + " Apellido: " + apellido + " DNI: " + dni + " Legajo: " + legajo;
     }
-   /* @Override
-    public boolean equals(Object o){
-        if (o==null)
-            return false;
-        if (!(o instanceof Empleado))
-            return false;
-        Empleado aux=(Empleado)o;
-        if(aux.getDni()==this.getDni()&&aux.getNombre().equals(this.getNombre()))
-            return true;
-        else
-            return false;
-    }*/
+
+    public abstract double cobrarSueldo() throws EmpleadosExceptions;
+    public abstract String imprimirRecibo();
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Empleado empleado = (Empleado) o;
         return dni == empleado.dni && legajo == empleado.legajo && Objects.equals(nombre, empleado.nombre);
     }
@@ -84,5 +66,11 @@ public abstract class Empleado implements IVacacionar, Comparable<Empleado> {
     @Override
     public int hashCode() {
         return Objects.hash(nombre, dni, legajo);
+    }
+
+    @Override
+    public int compareTo(Empleado o) {
+        // return this.nombre.compareTo(e.nombre);
+        return this.legajo - o.legajo;
     }
 }
