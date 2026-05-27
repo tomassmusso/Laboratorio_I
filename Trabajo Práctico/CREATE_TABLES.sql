@@ -40,6 +40,7 @@ CREATE TABLE Curso (
     turno VARCHAR(50),
     cantidadParciales INT NOT NULL,
     parcialesAprobadosNecesarios INT NOT NULL,
+    notaAprobacion DOUBLE NOT NULL,
     notaPromocion DOUBLE NOT NULL,
 
     FOREIGN KEY (idProfesor) REFERENCES Profesor(id)
