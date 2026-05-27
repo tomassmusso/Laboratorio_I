@@ -3,6 +3,7 @@ package entidades;
 import java.util.ArrayList;
 
 public class Inscripcion {
+    private int inscripcionId;
     private int alumnoId;
     private int cursoId;
     private Alumno alumno;

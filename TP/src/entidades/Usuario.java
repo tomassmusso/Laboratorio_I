@@ -7,10 +7,8 @@ public abstract class Usuario {
     private String mail;
     private String usuario;
     private String contraseña;
-    private static int ultimoId = 145;
 
     public Usuario(String nombre, String apellido, String mail, String usuario, String contraseña) {
-        this.id = ultimoId++;
         this.nombre = nombre;
         this.apellido = apellido;
         this.mail = mail;
@@ -19,6 +17,10 @@ public abstract class Usuario {
     }
 
     public Usuario(){}
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;

@@ -1,24 +1,26 @@
 package entidades;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Curso {
     private int idCurso;
     private String nombre;
     private int cupo;
+    private Date fechaInicio;
+    private Date fechaFin;
     private double precio;
     private Profesor profesor;
     private int cantidadParciales;
     private int parcialesAprobadosNecesarios;
     private double notaPromocion;
-    private static int ultimoIdCurso = 05;
     private ArrayList<Alumno> alumnos;
     private String turno;
 
-    public Curso(String nombre, int cupo, double precio, Profesor profesor, String turno, int cantidadParciales, int parcialesAprobadosNecesarios, double notaPromocion) {
-        this.idCurso = ultimoIdCurso++;
+    public Curso(String nombre, int cupo, Date fechaInicio, Date fechaFin, double precio, Profesor profesor, String turno, int cantidadParciales, int parcialesAprobadosNecesarios, double notaPromocion) {
         this.nombre = nombre;
         this.cupo = cupo;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
         this.precio = precio;
         this.profesor = profesor;
         this.turno = turno;
