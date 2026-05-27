@@ -83,7 +83,7 @@ public class DaoAlumno implements Idao<Alumno>{
             preparedStatement = connection.prepareStatement("SELECT * FROM Alumno WHERE id = ?");
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 String mail = rs.getString("mail");
@@ -91,7 +91,7 @@ public class DaoAlumno implements Idao<Alumno>{
                 String contraseña = rs.getString("contraseña");
                 int limiteCursos = rs.getInt("limiteCursos");
                 alumno = new Alumno(nombre, apellido, mail, usuario, contraseña, limiteCursos);
-                alumno.getSaldo();
+                alumno.setId(rs.getInt("id"));
             }
         }
         catch (ClassNotFoundException | SQLException e) {

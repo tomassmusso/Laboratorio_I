@@ -1,21 +1,19 @@
 package entidades;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Inscripcion {
     private int inscripcionId;
-    private int alumnoId;
-    private int cursoId;
     private Alumno alumno;
     private Curso curso;
-    private ArrayList<Double> notasParciales;
+    private ArrayList<NotaParcial> notasParciales;
     private Double notaFinal;
 
+
+    // CONSTRUCTORES
     public Inscripcion(Alumno alumno, Curso curso) {
         this.alumno = alumno;
         this.curso = curso;
-        this.alumnoId = alumno.getId();
-        this.cursoId = curso.getIdCurso();
         notasParciales = new ArrayList<>();
     }
 
@@ -23,19 +21,32 @@ public class Inscripcion {
         notasParciales = new ArrayList<>();
     }
 
+    // GETTERS Y SETTERS
+    public int getInscripcionId() {
+        return inscripcionId;
+    }
+
+    public void setInscripcionId(int inscripcionId) {
+        this.inscripcionId = inscripcionId;
+    }
+
     public Alumno getAlumno() {
         return alumno;
     }
 
+    public Curso getCurso() {
+        return curso;
+    }
+
     public int getAlumnoId() {
-        return alumnoId;
+        return alumno.getId();
     }
 
     public int getCursoId() {
-        return cursoId;
+        return curso.getIdCurso();
     }
 
-    public ArrayList<Double> getNotasParciales() {
+    public ArrayList<NotaParcial> getNotasParciales() {
         return notasParciales;
     }
 
@@ -43,40 +54,55 @@ public class Inscripcion {
         return notaFinal;
     }
 
-    public Curso getCurso() {
-        return curso;
+    public void setNotaFinal(Double notaFinal) {
+        if(materiaPromocionada()){
+            this.notaFinal = calcularPromedio();
+        }
+        else if(materiaAprobada()){
+            this.notaFinal = notaFinal;
+        }
     }
 
-    public void agregarNotaParcial(double nota){
+    // MÉTODOS
+    public void agregarNotaParcial(NotaParcial nota){
         notasParciales.add(nota);
     }
 
-    public void setNotaFinal(double nota){
-        if(estadoMateria()){
-            this.notaFinal = nota;
+    public double calcularAcumulado(){
+        double acumulado = 0;
+        for(NotaParcial nota:notasParciales){
+            acumulado += nota.getNota();
         }
+        return acumulado;
     }
 
-    public boolean estadoMateria(){
-        double acumulado = 0;
-        int aprobados = 0;
-        for(Double nota : notasParciales){
-            acumulado += nota;
-            if(nota >= 4){
-                aprobados++;
-            }
+    public int cantidadNotasCargadas(){
+        int cantidad = 0;
+        for(NotaParcial nota:notasParciales){
+            cantidad++;
         }
-        if(aprobados >= curso.getParcialesAprobadosNecesarios()){
-            double promedio = acumulado / curso.getCantidadParciales();
-            if(promedio >= curso.getNotaPromocion()){
-                this.notaFinal = promedio;
-            }
-            return true;
+        return cantidad;
+    }
+
+    public double calcularPromedio(){
+        double promedio = 0;
+        double acumulado = calcularAcumulado();
+        int cantidadNotas = cantidadNotasCargadas();
+        if(cantidadNotas == curso.getCantidadParciales()){
+            promedio = acumulado / cantidadNotas;
         }
-        return false;
+        return promedio;
+    }
+
+    public boolean materiaAprobada(){
+        return calcularPromedio() >= curso.getNotaAprobacion();
+    }
+
+    public boolean materiaPromocionada(){
+        return calcularPromedio() >= curso.getNotaPromocion();
     }
 
     public String toString(){
-        return " ID Curso: " + cursoId + " - ID Alumno: " + alumnoId + " - Notas Parciales: " + notasParciales + " - Nota Final: " + notaFinal;
+        return " ID Curso: " + curso.getIdCurso() + " - ID Alumno: " + alumno.getId() + " - Notas Parciales: " + notasParciales + " - Nota Final: " + notaFinal;
     }
 }

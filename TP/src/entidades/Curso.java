@@ -11,12 +11,11 @@ public class Curso {
     private double precio;
     private Profesor profesor;
     private int cantidadParciales;
-    private int parcialesAprobadosNecesarios;
+    private double notaAprobacion;
     private double notaPromocion;
-    private ArrayList<Alumno> alumnos;
     private String turno;
 
-    public Curso(String nombre, int cupo, Date fechaInicio, Date fechaFin, double precio, Profesor profesor, String turno, int cantidadParciales, int parcialesAprobadosNecesarios, double notaPromocion) {
+    public Curso(String nombre, int cupo, Date fechaInicio, Date fechaFin, double precio, Profesor profesor, String turno, int cantidadParciales, double notaAprobacion, double notaPromocion) {
         this.nombre = nombre;
         this.cupo = cupo;
         this.fechaInicio = fechaInicio;
@@ -25,15 +24,13 @@ public class Curso {
         this.profesor = profesor;
         this.turno = turno;
         this.cantidadParciales = cantidadParciales;
-        this.parcialesAprobadosNecesarios = parcialesAprobadosNecesarios;
+        this.notaAprobacion = notaAprobacion;
         this.notaPromocion = notaPromocion;
-        alumnos = new ArrayList<>();
     }
 
-    public Curso(){
-        alumnos = new ArrayList<>();
-    }
+    public Curso(){}
 
+    // GETTERS Y SETTERS
     public int getIdCurso() {
         return idCurso;
     }
@@ -42,12 +39,12 @@ public class Curso {
         return cantidadParciales;
     }
 
-    public int getParcialesAprobadosNecesarios() {
-        return parcialesAprobadosNecesarios;
-    }
-
     public double getNotaPromocion() {
         return notaPromocion;
+    }
+
+    public double getNotaAprobacion(){
+        return notaAprobacion;
     }
 
     public String getNombre() {
@@ -70,34 +67,8 @@ public class Curso {
         return turno;
     }
 
-    public ArrayList<Alumno> getAlumnos() {
-        return alumnos;
-    }
-
-    public void agregarAlumno(Alumno alumno){
-        alumnos.add(alumno);
-    }
-
-    public double cantidadRecaudado(){
-        double total = 0;
-        for(Alumno alumno:alumnos){
-            total += precio;
-        }
-        return total;
-    }
-
-    public boolean hayCupo(){
-        int totalInscriptos = 0;
-        for(Alumno alumno:alumnos){
-            totalInscriptos++;
-        }
-        if (totalInscriptos < cupo){
-            return true;
-        }
-        return false;
-    }
-
+    // MÉTODOS
     public String informeCurso() {
-        return "ID Curso: " + idCurso + " - Nombre: " + nombre + " - Precio: $" + precio + " - Profesor: " + profesor + " - Inscriptos: " + alumnos + " - Total Recaudado: $" + cantidadRecaudado();
+        return "ID Curso: " + idCurso + " - Nombre: " + nombre + " - Precio: $" + precio + " - Profesor: " + profesor;
     }
 }

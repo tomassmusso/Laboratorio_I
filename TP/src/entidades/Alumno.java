@@ -5,23 +5,23 @@ import java.util.ArrayList;
 public class Alumno extends Usuario {
     private int limiteCursos;
     private ArrayList<Inscripcion> inscripciones;
-    private double saldo;
+    private double deuda;
 
+    // CONSTRUCTORES
     public Alumno(String nombre, String apellido, String mail, String usuario, String contraseña, int limiteCursos) {
         super(nombre, apellido, mail, usuario, contraseña);
         this.limiteCursos = limiteCursos;
         inscripciones = new ArrayList<>();
-        this.saldo = 0; // inicializo el saldo de un nuevo alumno a 0
+        this.deuda = 0;
     }
 
     public Alumno(){
         super();
         inscripciones = new ArrayList<>();
-        this.saldo = 0;
+        this.deuda = 0;
     }
 
-
-
+    // GETTERS Y SETTERS
     public int getLimiteCursos() {
         return limiteCursos;
     }
@@ -30,20 +30,18 @@ public class Alumno extends Usuario {
         return inscripciones;
     }
 
-    public double getSaldo() {
-        return saldo;
+    public double getDeuda() {
+        return deuda;
+    }
+
+    // MÉTODOS
+    public boolean puedeInscribirse(){
+        int total = contadorCursosInscriptos();
+        return total < limiteCursos;
     }
 
     public void inscribirseACurso(Inscripcion inscripcion){
         inscripciones.add(inscripcion);
-    }
-
-    public boolean puedeInscribirse(){
-        int total = contadorCursosInscriptos();
-        if(total < limiteCursos){
-            return true;
-        }
-        return false;
     }
 
     public int contadorCursosInscriptos(){
@@ -54,14 +52,18 @@ public class Alumno extends Usuario {
         return total;
     }
 
-    @Override
-    public String toString() {
-        return super.toString() + " - Cursos Inscriptos: " + inscripciones;
+    public void aumentarDeuda(double monto){
+        this.deuda += monto;
     }
 
-    /*public void pagarDeuda(double monto){
-        this.saldo -= monto;
-    }*/
+    public void pagarDeuda(double monto){
+        this.deuda -= monto;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }
 
 
