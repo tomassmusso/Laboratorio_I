@@ -6,7 +6,7 @@ CREATE TABLE Alumno (
     usuario VARCHAR(50) NOT NULL UNIQUE,
     contraseña VARCHAR(100) NOT NULL,
     limiteCursos INT NOT NULL,
-    saldo DECIMAL(10,2) DEFAULT 0
+    deuda DECIMAL(10,2) DEFAULT 0
 );
 
 CREATE TABLE Profesor (
