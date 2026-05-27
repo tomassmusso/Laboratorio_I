@@ -39,7 +39,6 @@ CREATE TABLE Curso (
     idProfesor INT NOT NULL,
     turno VARCHAR(50),
     cantidadParciales INT NOT NULL,
-    parcialesAprobadosNecesarios INT NOT NULL,
     notaAprobacion DOUBLE NOT NULL,
     notaPromocion DOUBLE NOT NULL,
 
