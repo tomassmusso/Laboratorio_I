@@ -18,14 +18,13 @@ public class DaoProfesor implements Idao<Profesor>{
         try{
             Class.forName(DB_JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            preparedStatement = connection.prepareStatement("INSERT INTO Profesor VALUES(?,?,?,?,?,?,?)");
-            preparedStatement.setInt(1, elemento.getId());
-            preparedStatement.setString(2, elemento.getNombre());
-            preparedStatement.setString(3, elemento.getApellido());
-            preparedStatement.setString(4, elemento.getMail());
-            preparedStatement.setString(5, elemento.getUsuario());
-            preparedStatement.setString(6, elemento.getContraseña());
-            preparedStatement.setString(7, elemento.getDepartamento());
+            preparedStatement = connection.prepareStatement("INSERT INTO Profesor(nombre, apellido, mail, usuario, contraseña, departamento) VALUES(?,?,?,?,?,?)");
+            preparedStatement.setString(1, elemento.getNombre());
+            preparedStatement.setString(2, elemento.getApellido());
+            preparedStatement.setString(3, elemento.getMail());
+            preparedStatement.setString(4, elemento.getUsuario());
+            preparedStatement.setString(5, elemento.getContraseña());
+            preparedStatement.setString(6, elemento.getDepartamento());
             int resultado = preparedStatement.executeUpdate();
         }
         catch (ClassNotFoundException | SQLException e){
@@ -88,8 +87,9 @@ public class DaoProfesor implements Idao<Profesor>{
                 String mail = rs.getString("mail");
                 String usuario = rs.getString("usuario");
                 String contraseña = rs.getString("contraseña");
-                String departamento = rs.getString("Departamento");
+                String departamento = rs.getString("departamento");
                 profesor = new Profesor(nombre, apellido, mail, usuario, contraseña, departamento);
+                profesor.setId(rs.getInt("id"));
             }
         }
         catch (ClassNotFoundException | SQLException e) {
@@ -108,7 +108,7 @@ public class DaoProfesor implements Idao<Profesor>{
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             preparedStatement = connection.prepareStatement("SELECT * FROM Profesor");
             ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 String mail = rs.getString("mail");
@@ -116,6 +116,7 @@ public class DaoProfesor implements Idao<Profesor>{
                 String contraseña = rs.getString("contraseña");
                 String departamento = rs.getString("Departamento");
                 Profesor profesor = new Profesor(nombre, apellido, mail, usuario, contraseña, departamento);
+                profesor.setId(rs.getInt("id"));
                 profesores.add(profesor);
             }
         }

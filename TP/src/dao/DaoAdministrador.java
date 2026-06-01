@@ -18,14 +18,13 @@ public class DaoAdministrador implements Idao<Administrador>{
         try{
             Class.forName(DB_JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            preparedStatement = connection.prepareStatement("INSERT INTO Administrador VALUES(?,?,?,?,?,?,?)");
-            preparedStatement.setInt(1, elemento.getId());
-            preparedStatement.setString(2, elemento.getNombre());
-            preparedStatement.setString(3, elemento.getApellido());
-            preparedStatement.setString(4, elemento.getMail());
-            preparedStatement.setString(5, elemento.getUsuario());
-            preparedStatement.setString(6, elemento.getContraseña());
-            preparedStatement.setString(7, elemento.getSector());
+            preparedStatement = connection.prepareStatement("INSERT INTO Administrador(nombre, apellido, mail, usuario, contraseña, sector) VALUES(?,?,?,?,?,?)");
+            preparedStatement.setString(1, elemento.getNombre());
+            preparedStatement.setString(2, elemento.getApellido());
+            preparedStatement.setString(3, elemento.getMail());
+            preparedStatement.setString(4, elemento.getUsuario());
+            preparedStatement.setString(5, elemento.getContraseña());
+            preparedStatement.setString(6, elemento.getSector());
             int resultado = preparedStatement.executeUpdate();
         }
         catch (ClassNotFoundException | SQLException e){
@@ -88,8 +87,9 @@ public class DaoAdministrador implements Idao<Administrador>{
                 String mail = rs.getString("mail");
                 String usuario = rs.getString("usuario");
                 String contraseña = rs.getString("contraseña");
-                String sector = rs.getString("Sector");
+                String sector = rs.getString("sector");
                 administrador = new Administrador(nombre, apellido, mail, usuario, contraseña, sector);
+                administrador.setId(rs.getInt("id"));
             }
         }
         catch (ClassNotFoundException | SQLException e) {
@@ -108,7 +108,7 @@ public class DaoAdministrador implements Idao<Administrador>{
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             preparedStatement = connection.prepareStatement("SELECT * FROM Administrador");
             ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 String mail = rs.getString("mail");
@@ -116,6 +116,7 @@ public class DaoAdministrador implements Idao<Administrador>{
                 String contraseña = rs.getString("contraseña");
                 String sector = rs.getString("Sector");
                 Administrador administrador = new Administrador(nombre, apellido, mail, usuario, contraseña, sector);
+                administrador.setId(rs.getInt("id"));
                 administradores.add(administrador);
             }
         }

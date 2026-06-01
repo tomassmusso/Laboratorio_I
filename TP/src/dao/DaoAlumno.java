@@ -18,14 +18,14 @@ public class DaoAlumno implements Idao<Alumno>{
         try{
             Class.forName(DB_JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            preparedStatement = connection.prepareStatement("INSERT INTO Alumno(nombre, apellido, mail, usuario, contraseña, limiteCursos, saldo) VALUES(?,?,?,?,?,?,?)");
+            preparedStatement = connection.prepareStatement("INSERT INTO Alumno(nombre, apellido, mail, usuario, contraseña, limiteCursos, deuda) VALUES(?,?,?,?,?,?,?)");
             preparedStatement.setString(1, elemento.getNombre());
             preparedStatement.setString(2, elemento.getApellido());
             preparedStatement.setString(3, elemento.getMail());
             preparedStatement.setString(4, elemento.getUsuario());
             preparedStatement.setString(5, elemento.getContraseña());
             preparedStatement.setInt(6, elemento.getLimiteCursos());
-            preparedStatement.setDouble(7, elemento.getSaldo());
+            preparedStatement.setDouble(7, elemento.getDeuda());
             int resultado = preparedStatement.executeUpdate();
         }
         catch (ClassNotFoundException | SQLException e){
@@ -56,14 +56,14 @@ public class DaoAlumno implements Idao<Alumno>{
         try{
             Class.forName(DB_JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            preparedStatement = connection.prepareStatement("UPDATE Alumno SET nombre=?, apellido=?, mail=?, usuario=?, contraseña=?, limiteCursos=?, saldo=? WHERE id=?");
+            preparedStatement = connection.prepareStatement("UPDATE Alumno SET nombre=?, apellido=?, mail=?, usuario=?, contraseña=?, limiteCursos=?, deuda=? WHERE id=?");
             preparedStatement.setString(1, elemento.getNombre());
             preparedStatement.setString(2, elemento.getApellido());
             preparedStatement.setString(3, elemento.getMail());
             preparedStatement.setString(4, elemento.getUsuario());
             preparedStatement.setString(5, elemento.getContraseña());
             preparedStatement.setInt(6, elemento.getLimiteCursos());
-            preparedStatement.setDouble(7, elemento.getSaldo());
+            preparedStatement.setDouble(7, elemento.getDeuda());
             preparedStatement.setInt(8, elemento.getId());
             int resultado = preparedStatement.executeUpdate();
         }

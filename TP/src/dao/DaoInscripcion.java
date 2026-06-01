@@ -1,7 +1,6 @@
 package dao;
 
-import entidades.Alumno;
-import entidades.Inscripcion;
+import entidades.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -54,6 +53,7 @@ public class DaoInscripcion implements Idao<Inscripcion>{
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             preparedStatement = connection.prepareStatement("UPDATE Inscripcion SET notaFinal=? WHERE id=?");
             preparedStatement.setDouble(1, elemento.getNotaFinal());
+            preparedStatement.setInt(2, elemento.getInscripcionId());
             int resultado = preparedStatement.executeUpdate();
         }
         catch (ClassNotFoundException | SQLException e){
@@ -84,11 +84,13 @@ public class DaoInscripcion implements Idao<Inscripcion>{
                 inscripcion.setInscripcionId(rs.getInt("id"));
 
                 double notaFinal = rs.getDouble("notaFinal");
-                inscripcion.setNotaFinal(notaFinal);
+                if(!rs.wasNull()){
+                    inscripcion.setNotaFinal(notaFinal);
+                }
 
                 DaoNotaParcial daoNotaParcial = new DaoNotaParcial();
-                ArrayList<Double> notas = daoNotaParcial.consultarPorInscripcion(inscripcion.getInscripcionId());
-                for(Double nota : notas){
+                ArrayList<NotaParcial> notas = daoNotaParcial.consultarPorInscripcion(inscripcion.getInscripcionId());
+                for(NotaParcial nota : notas){
                     inscripcion.agregarNotaParcial(nota);
                 }
             }
@@ -127,8 +129,8 @@ public class DaoInscripcion implements Idao<Inscripcion>{
                 }
 
                 DaoNotaParcial daoNotaParcial = new DaoNotaParcial();
-                ArrayList<Double> notas = daoNotaParcial.consultarPorInscripcion(inscripcion.getInscripcionId());
-                for(Double nota : notas){
+                ArrayList<NotaParcial> notas = daoNotaParcial.consultarPorInscripcion(inscripcion.getInscripcionId());
+                for(NotaParcial nota : notas){
                     inscripcion.agregarNotaParcial(nota);
                 }
 
@@ -136,48 +138,6 @@ public class DaoInscripcion implements Idao<Inscripcion>{
             }
         } catch (ClassNotFoundException | SQLException e) {
             throw new DaoException("Error al consultar inscripciones: " + e.getMessage());
-        }
-        return inscripciones;
-    }
-
-    public ArrayList<Inscripcion> consultarPorAlumno(int alumnoId) throws DaoException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ArrayList<Inscripcion> inscripciones = new ArrayList<>();
-        try {
-            Class.forName(DB_JDBC_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM Inscripcion WHERE alumnoId = ?"
-            );
-            preparedStatement.setInt(1, alumnoId);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                int cursoId = rs.getInt("cursoId");
-
-                DaoAlumno daoAlumno = new DaoAlumno();
-                DaoCurso daoCurso = new DaoCurso();
-                Alumno alumno = daoAlumno.consultar(alumnoId);
-                Curso curso = daoCurso.consultar(cursoId);
-
-                Inscripcion inscripcion = new Inscripcion(alumno, curso);
-                inscripcion.setInscripcionId(rs.getInt("id"));
-
-                double notaFinal = rs.getDouble("notaFinal");
-                if(!rs.wasNull()){
-                    inscripcion.setNotaFinal(notaFinal);
-                }
-
-                DaoNotaParcial daoNotaParcial = new DaoNotaParcial();
-                ArrayList<Double> notas = daoNotaParcial.consultarPorInscripcion(inscripcion.getInscripcionId());
-                for(Double nota : notas){
-                    inscripcion.agregarNotaParcial(nota);
-                }
-
-                inscripciones.add(inscripcion);
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new DaoException("Error al consultar inscripciones por alumno: " + e.getMessage());
         }
         return inscripciones;
     }
