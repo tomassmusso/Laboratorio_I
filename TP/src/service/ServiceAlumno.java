@@ -14,7 +14,7 @@ public class ServiceAlumno {
         daoInscripcion = new DaoInscripcion();
     }
 
-    public void modiicarAlumno(Alumno alumno) throws ServiceException{
+    public void modificarAlumno(Alumno alumno) throws ServiceException{
         try{
             daoAlumno.modificar(alumno);
         }
@@ -23,25 +23,30 @@ public class ServiceAlumno {
         }
     }
 
-    public Alumno consultarAlumno(int idAlumno) throws ServiceException{
-        try{
-            daoAlumno.consultar(idAlumno);
+    public Alumno consultarAlumno(int id) throws ServiceException{
+        try {
+            return daoAlumno.consultar(id);
         }
         catch (DaoException e){
             throw new ServiceException(e.getMessage());
         }
-        return null;
     }
 
-    public ArrayList<Inscripcion> consultarInscripciones(int idAlumno) throws ServiceException{
+    public ArrayList<Inscripcion> consultarInscripciones(int alumnoId) throws ServiceException{
         try{
-            daoInscripcion.consultarInscripcion(idAlumno);
+            return daoInscripcion.consultarPorAlumno(alumnoId);
         }
         catch (DaoException e){
             throw new ServiceException(e.getMessage());
         }
-        return null;
     }
 
-
+    public Inscripcion consultarInscripcion(int inscripcionId) throws ServiceException{
+        try{
+            return daoInscripcion.consultar(inscripcionId);
+        }
+        catch (DaoException e){
+            throw new ServiceException(e.getMessage());
+        }
+    }
 }

@@ -37,7 +37,15 @@ public class Alumno extends Usuario {
     // MÉTODOS
     public boolean puedeInscribirse(){
         int total = contadorCursosInscriptos();
-        return total < limiteCursos;
+        if(contadorCursosInscriptos() < limiteCursos){
+            return true;
+        }
+        for(Inscripcion inscripcion:inscripciones){
+            if(inscripcion.materiaAprobada()){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void inscribirseACurso(Inscripcion inscripcion){

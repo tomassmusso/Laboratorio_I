@@ -9,18 +9,24 @@ public class Curso {
     private Date fechaInicio;
     private Date fechaFin;
     private double precio;
+    private Date fechaInicioDescuento;
+    private Date fechaFinDescuento;
+    private double precioDescuento;
     private Profesor profesor;
     private int cantidadParciales;
     private double notaAprobacion;
     private double notaPromocion;
     private String turno;
 
-    public Curso(String nombre, int cupo, Date fechaInicio, Date fechaFin, double precio, Profesor profesor, String turno, int cantidadParciales, double notaAprobacion, double notaPromocion) {
+    public Curso(String nombre, int cupo, Date fechaInicio, Date fechaFin, double precio, Date fechaInicioDescuento, Date fechaFinDescuento, double precioDescuento, Profesor profesor, String turno, int cantidadParciales, double notaAprobacion, double notaPromocion) {
         this.nombre = nombre;
         this.cupo = cupo;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.precio = precio;
+        this.fechaInicioDescuento = fechaInicioDescuento;
+        this.fechaFinDescuento = fechaFinDescuento;
+        this.precioDescuento = precioDescuento;
         this.profesor = profesor;
         this.turno = turno;
         this.cantidadParciales = cantidadParciales;
@@ -59,6 +65,18 @@ public class Curso {
         return precio;
     }
 
+    public Date getFechaInicioDescuento() {
+        return fechaInicioDescuento;
+    }
+
+    public Date getFechaFinDescuento() {
+        return fechaFinDescuento;
+    }
+
+    public double getPrecioDescuento() {
+        return precioDescuento;
+    }
+
     public Profesor getProfesor() {
         return profesor;
     }
@@ -80,6 +98,14 @@ public class Curso {
     }
 
     // MÉTODOS
+    public double getPrecioActual(){
+        Date hoy = new Date();
+        if(hoy.after(fechaInicioDescuento) && hoy.before(fechaFinDescuento)){
+            return precioDescuento;
+        }
+        return precio;
+    }
+
     public String informeCurso() {
         return "ID Curso: " + idCurso + " - Nombre: " + nombre + " - Precio: $" + precio + " - Profesor: " + profesor;
     }

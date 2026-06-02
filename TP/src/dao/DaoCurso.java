@@ -18,17 +18,22 @@ public class DaoCurso implements Idao<Curso>{
         try{
             Class.forName(DB_JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            preparedStatement = connection.prepareStatement("INSERT INTO Curso(nombre, cupo, fechaInicio, fechaFin, precio, idProfesor, cantidadParciales, notaAprobacion, notaPromocion, turno) VALUES(?,?,?,?,?,?,?,?,?,?)");
+            preparedStatement = connection.prepareStatement(
+                    "INSERT INTO Curso(nombre, cupo, fechaInicio, fechaFin, precio, fechaInicioDescuento, fechaFinDescuento, precioDescuento, idProfesor, cantidadParciales, notaAprobacion, notaPromocion, turno) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)"
+            );
             preparedStatement.setString(1, elemento.getNombre());
             preparedStatement.setInt(2, elemento.getCupo());
             preparedStatement.setDate(3, new java.sql.Date(elemento.getFechaInicio().getTime()));
             preparedStatement.setDate(4, new java.sql.Date(elemento.getFechaFin().getTime()));
             preparedStatement.setDouble(5, elemento.getPrecio());
-            preparedStatement.setInt(6, elemento.getProfesor().getId());
-            preparedStatement.setInt(7, elemento.getCantidadParciales());
-            preparedStatement.setDouble(8, elemento.getNotaAprobacion());
-            preparedStatement.setDouble(9, elemento.getNotaPromocion());
-            preparedStatement.setString(10, elemento.getTurno());
+            preparedStatement.setDate(6, new java.sql.Date(elemento.getFechaInicioDescuento().getTime()));
+            preparedStatement.setDate(7, new java.sql.Date(elemento.getFechaFinDescuento().getTime()));
+            preparedStatement.setDouble(8, elemento.getPrecioDescuento());
+            preparedStatement.setInt(9, elemento.getProfesor().getId());
+            preparedStatement.setInt(10, elemento.getCantidadParciales());
+            preparedStatement.setDouble(11, elemento.getNotaAprobacion());
+            preparedStatement.setDouble(12, elemento.getNotaPromocion());
+            preparedStatement.setString(13, elemento.getTurno());
             int resultado = preparedStatement.executeUpdate();
         }
         catch (ClassNotFoundException | SQLException e){
@@ -59,18 +64,23 @@ public class DaoCurso implements Idao<Curso>{
         try{
             Class.forName(DB_JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            preparedStatement = connection.prepareStatement("UPDATE Curso SET nombre=?, cupo=?, fechaInicio=?, fechaFin=?, precio=?, idProfesor=?, cantidadParciales=?, notaAprobacion=?, notaPromocion=?, turno=? WHERE id=?");
+            preparedStatement = connection.prepareStatement(
+                    "UPDATE Curso SET nombre=?, cupo=?, fechaInicio=?, fechaFin=?, precio=?, fechaInicioDescuento=?, fechaFinDescuento=?, precioDescuento=?, idProfesor=?, cantidadParciales=?, notaAprobacion=?, notaPromocion=?, turno=? WHERE id=?"
+            );
             preparedStatement.setString(1, elemento.getNombre());
             preparedStatement.setInt(2, elemento.getCupo());
             preparedStatement.setDate(3, new java.sql.Date(elemento.getFechaInicio().getTime()));
             preparedStatement.setDate(4, new java.sql.Date(elemento.getFechaFin().getTime()));
             preparedStatement.setDouble(5, elemento.getPrecio());
-            preparedStatement.setInt(6, elemento.getProfesor().getId());
-            preparedStatement.setInt(7, elemento.getCantidadParciales());
-            preparedStatement.setDouble(8, elemento.getNotaAprobacion());
-            preparedStatement.setDouble(9, elemento.getNotaPromocion());
-            preparedStatement.setString(10, elemento.getTurno());
-            preparedStatement.setInt(11, elemento.getIdCurso());
+            preparedStatement.setDate(6, new java.sql.Date(elemento.getFechaInicioDescuento().getTime()));
+            preparedStatement.setDate(7, new java.sql.Date(elemento.getFechaFinDescuento().getTime()));
+            preparedStatement.setDouble(8, elemento.getPrecioDescuento());
+            preparedStatement.setInt(9, elemento.getProfesor().getId());
+            preparedStatement.setInt(10, elemento.getCantidadParciales());
+            preparedStatement.setDouble(11, elemento.getNotaAprobacion());
+            preparedStatement.setDouble(12, elemento.getNotaPromocion());
+            preparedStatement.setString(13, elemento.getTurno());
+            preparedStatement.setInt(14, elemento.getIdCurso());
             int resultado = preparedStatement.executeUpdate();
         }
         catch (ClassNotFoundException | SQLException e){
@@ -95,6 +105,9 @@ public class DaoCurso implements Idao<Curso>{
                 Date fechaInicio = rs.getDate("fechaInicio");
                 Date fechaFin = rs.getDate("fechaFin");
                 double precio = rs.getDouble("precio");
+                Date fechaInicioDescuento = rs.getDate("fechaInicioDescuento");
+                Date fechaFinDescuento = rs.getDate("fechaFinDescuento");
+                double precioDescuento = rs.getDouble("precioDescuento");
                 String turno = rs.getString("turno");
                 int cantidadParciales = rs.getInt("cantidadParciales");
                 double notaAprobacion = rs.getDouble("notaAprobacion");
@@ -106,7 +119,7 @@ public class DaoCurso implements Idao<Curso>{
                 Profesor profesor = daoProfesor.consultar(idProfesor);
 
                 // Construir el curso con todos los datos
-                curso = new Curso(nombre, cupo, fechaInicio, fechaFin, precio, profesor, turno, cantidadParciales, notaAprobacion, notaPromocion);
+                curso = new Curso(nombre, cupo, fechaInicio, fechaFin, precio, fechaInicioDescuento, fechaFinDescuento, precioDescuento, profesor, turno, cantidadParciales, notaAprobacion, notaPromocion);
                 curso.setIdCurso(rs.getInt("id"));
             }
         }
@@ -132,6 +145,9 @@ public class DaoCurso implements Idao<Curso>{
                 Date fechaInicio = rs.getDate("fechaInicio");
                 Date fechaFin = rs.getDate("fechaFin");
                 double precio = rs.getDouble("precio");
+                Date fechaInicioDescuento = rs.getDate("fechaInicioDescuento");
+                Date fechaFinDescuento = rs.getDate("fechaFinDescuento");
+                double precioDescuento = rs.getDouble("precioDescuento");
                 String turno = rs.getString("turno");
                 int cantidadParciales = rs.getInt("cantidadParciales");
                 double notaAprobacion = rs.getDouble("notaAprobacion");
@@ -143,13 +159,53 @@ public class DaoCurso implements Idao<Curso>{
                 Profesor profesor = daoProfesor.consultar(idProfesor);
 
                 // Construir el curso con todos los datos
-                Curso curso = new Curso(nombre, cupo, fechaInicio, fechaFin, precio, profesor, turno, cantidadParciales, notaAprobacion, notaPromocion);
+                Curso curso = new Curso(nombre, cupo, fechaInicio, fechaFin, precio, fechaInicioDescuento, fechaFinDescuento, precioDescuento, profesor, turno, cantidadParciales, notaAprobacion, notaPromocion);
                 curso.setIdCurso(rs.getInt("id"));
                 cursos.add(curso);
             }
         }
         catch (ClassNotFoundException | SQLException e) {
-            throw new DaoException("Error al consultar curso" + e.getMessage());
+            throw new DaoException("Error al consultar cursos" + e.getMessage());
+        }
+        return cursos;
+    }
+
+    public ArrayList<Curso> consultarPorProfesor(int profesorId) throws DaoException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ArrayList<Curso> cursos = new ArrayList<>();
+        try {
+            Class.forName(DB_JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            preparedStatement = connection.prepareStatement("SELECT * FROM Curso WHERE idProfesor");
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                String nombre = rs.getString("nombre");
+                int cupo = rs.getInt("cupo");
+                Date fechaInicio = rs.getDate("fechaInicio");
+                Date fechaFin = rs.getDate("fechaFin");
+                double precio = rs.getDouble("precio");
+                Date fechaInicioDescuento = rs.getDate("fechaInicioDescuento");
+                Date fechaFinDescuento = rs.getDate("fechaFinDescuento");
+                double precioDescuento = rs.getDouble("precioDescuento");
+                String turno = rs.getString("turno");
+                int cantidadParciales = rs.getInt("cantidadParciales");
+                double notaAprobacion = rs.getDouble("notaAprobacion");
+                double notaPromocion = rs.getDouble("notaPromocion");
+
+                // Traer el objeto Profesor completo a partir del ID
+                int idProfesor = rs.getInt("idProfesor");
+                DaoProfesor daoProfesor = new DaoProfesor();
+                Profesor profesor = daoProfesor.consultar(idProfesor);
+
+                // Construir el curso con todos los datos
+                Curso curso = new Curso(nombre, cupo, fechaInicio, fechaFin, precio, fechaInicioDescuento, fechaFinDescuento, precioDescuento, profesor, turno, cantidadParciales, notaAprobacion, notaPromocion);
+                curso.setIdCurso(rs.getInt("id"));
+                cursos.add(curso);
+            }
+        }
+        catch (ClassNotFoundException | SQLException e) {
+            throw new DaoException("Error al consultar cursos por profesor" + e.getMessage());
         }
         return cursos;
     }
