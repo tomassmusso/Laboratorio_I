@@ -1,6 +1,7 @@
 package dao;
 
 import entidades.Administrador;
+import entidades.Alumno;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -124,5 +125,32 @@ public class DaoAdministrador implements Idao<Administrador>{
             throw new DaoException("Error al consultar administradores");
         }
         return administradores;
+    }
+
+    public Administrador inicioSesion(String usuario, String contraseña) throws DaoException{
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        Administrador administrador = null;
+        try {
+            Class.forName(DB_JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            preparedStatement = connection.prepareStatement("SELECT * FROM Administrador WHERE usuario = ? AND contraseña = ?"            );
+            preparedStatement.setString(1, usuario);
+            preparedStatement.setString(2, contraseña);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String mail = rs.getString("mail");
+                String usuarioAdministrador = rs.getString("usuario");
+                String contraseñaAdministrador = rs.getString("contraseña");
+                String sector = rs.getString("sector");
+                administrador = new Administrador(nombre, apellido, mail, usuarioAdministrador, contraseñaAdministrador, sector);
+                administrador.setId(rs.getInt("id"));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new DaoException("Error en login: " + e.getMessage());
+        }
+        return administrador;
     }
 }
