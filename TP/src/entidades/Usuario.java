@@ -46,6 +46,18 @@ public abstract class Usuario {
         return contraseña;
     }
 
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+
     @Override
     public String toString() {
         return "ID Usuario: " + id + " - Nombre Completo: " + nombre + " " + apellido + " - Correo: " + mail;

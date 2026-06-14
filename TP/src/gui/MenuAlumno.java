@@ -36,7 +36,7 @@ public class MenuAlumno extends JPanel {
         jButtonMisDatos.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                panelManager.setUsuarioIniciado(alumno);
+                panelManager.setUsuarioAModificar(alumno);
                 panelManager.mostrar(7);
             }
         });

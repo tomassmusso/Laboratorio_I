@@ -8,6 +8,7 @@ import java.awt.*;
 public class PanelManager {
     private JFrame jFrame;
     private Usuario usuarioIniciado;
+    private Usuario usuarioAModificar;
 
     // Pantallas comunes
     private InicioSesion inicioSesion;
@@ -49,6 +50,14 @@ public class PanelManager {
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mostrar(1);
         jFrame.setSize(500, 700);
+    }
+
+    public Usuario getUsuarioAModificar() {
+        return usuarioAModificar;
+    }
+
+    public void setUsuarioAModificar(Usuario usuarioAModificar) {
+        this.usuarioAModificar = usuarioAModificar;
     }
 
     public Usuario getUsuarioIniciado() {
