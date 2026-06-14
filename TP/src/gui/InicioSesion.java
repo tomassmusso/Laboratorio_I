@@ -27,7 +27,7 @@ public class InicioSesion extends JPanel {
     public void armarFormulario() {
         serviceUsuario = new ServiceUsuario();
         formulario = new JPanel();
-        formulario.setLayout(new GridLayout(3, 2, 10, 10));
+        formulario.setLayout(new GridLayout(3, 2));
 
         jLabelUsuario = new JLabel("Usuario:");
         jTextFieldUsuario = new JTextField(20);
@@ -44,7 +44,7 @@ public class InicioSesion extends JPanel {
 
         jButtonIngresar.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent event) {
                 String usuario = jTextFieldUsuario.getText();
                 String contraseña = new String(jPasswordFieldContraseña.getPassword());
                 try {
@@ -53,12 +53,14 @@ public class InicioSesion extends JPanel {
                     // redirige según el rol
                     if(logueado instanceof entidades.Alumno){
                         panelManager.mostrar(2); // menuAlumno
-                    } else if(logueado instanceof entidades.Profesor){
+                    }
+                    else if(logueado instanceof entidades.Profesor){
                         panelManager.mostrar(3); // menuProfesor
-                    } else if(logueado instanceof entidades.Administrador){
+                    }
+                    else if(logueado instanceof entidades.Administrador){
                         panelManager.mostrar(4); // menuAdmin
                     }
-                } catch (ServiceException ex) {
+                } catch (ServiceException e) {
                     JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
                 }
             }

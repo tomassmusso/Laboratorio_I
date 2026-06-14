@@ -22,18 +22,24 @@ public class ServiceUsuario {
 
     public Usuario inicioSesion(String usuario, String contraseña) throws ServiceException{
         try{
+            System.out.println("Buscando alumno...");
             Alumno alumno = daoAlumno.inicioSesion(usuario, contraseña);
             if(alumno != null){
+                System.out.println("Encontrado alumno");
                 return alumno;
             }
+
             Profesor profesor = daoProfesor.inicioSesion(usuario, contraseña);
             if(profesor != null){
                 return profesor;
             }
+
             Administrador administrador = daoAdministrador.inicioSesion(usuario, contraseña);
             if(administrador != null){
                 return administrador;
             }
+
+            System.out.println("No encontrado");
             throw new ServiceException("Usuario o contraseña incorrectas");
         }
         catch (DaoException e){
