@@ -53,6 +53,7 @@ CREATE TABLE Inscripcion (
     alumnoId INT NOT NULL,
     cursoId INT NOT NULL,
     notaFinal DOUBLE,
+    finalizada BOOLEAN DEFAULT FALSE,
 
     FOREIGN KEY (alumnoId) REFERENCES Alumno(id),
     FOREIGN KEY (cursoId) REFERENCES Curso(id)
