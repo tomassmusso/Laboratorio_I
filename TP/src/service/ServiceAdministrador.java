@@ -4,6 +4,7 @@ import dao.*;
 import entidades.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ServiceAdministrador {
     private DaoAlumno daoAlumno;

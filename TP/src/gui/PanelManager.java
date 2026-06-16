@@ -20,8 +20,8 @@ public class PanelManager {
     private AltaProfesor altaProfesor;
     private ModificarProfesor modificarProfesor;
     private ListaInscripcion listaInscripcion;
-    /*
     private ListaCurso listaCurso;
+    /*
     private AltaCurso altaCurso;
     private ModificarCurso modificarCurso;
     private AltaInscripcion altaInscripcion;
@@ -102,6 +102,10 @@ public class PanelManager {
             case 10:
                 modificarProfesor = new ModificarProfesor(this);
                 mostrar(modificarProfesor);
+                break;
+            case 11:
+                listaCurso = new ListaCurso(this);
+                mostrar(listaCurso);
                 break;
 
             case 17:

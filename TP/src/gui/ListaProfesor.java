@@ -95,17 +95,32 @@ public class ListaProfesor extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String input = JOptionPane.showInputDialog("Ingrese el ID del profesor a despedir:");
-                try {
+                try{
                     int id = Integer.parseInt(input);
                     serviceAdministrador.eliminarProfesor(id);
-                    JOptionPane.showMessageDialog(null, "profesor despedido correctamente");
+                    JOptionPane.showMessageDialog(null, "Profesor despedido correctamente");
                     panelManager.mostrar(8); // refresca la lista
-                } catch(ServiceException ex){
+                }
+                catch(ServiceException ex){
                     JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
                 }
             }
         });
-
+        jButtonConsultarCursosDicatados.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String input = JOptionPane.showInputDialog("Ingrese ID del profesor a listar cursos dictados:");
+                try {
+                    int id = Integer.parseInt(input);
+                    Profesor profesor = serviceAdministrador.consultarProfesor(id);
+                    panelManager.setUsuarioAModificar(profesor);
+                    panelManager.mostrar(11);
+                }
+                catch (ServiceException ex) {
+                    JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+                }
+            }
+        });
         jButtonVolver.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
