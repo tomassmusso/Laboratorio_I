@@ -18,7 +18,7 @@ public class ServiceCurso {
     }
 
     public String reporteRecaudacionCurso(int cursoId) throws ServiceException {
-        try {
+        try{
             Curso curso = daoCurso.consultar(cursoId);
             if(curso == null){
                 throw new ServiceException("No se encontró el curso");
@@ -29,31 +29,33 @@ public class ServiceCurso {
                 recaudado += curso.getPrecioActual();
             }
             return "Curso: " + curso.getNombre() + " - Recaudado: $" + recaudado;
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
     public String reporteRecaudacionTotal() throws ServiceException {
-        try {
+        try{
             ArrayList<Curso> cursos = daoCurso.consultarTodos();
             double recaudacionTotal = 0;
-            for(Curso curso : cursos){
+            for(Curso curso:cursos){
                 ArrayList<Inscripcion> inscripciones = daoInscripcion.consultarPorCurso(curso.getIdCurso());
                 double recaudacionCurso = 0;
-                for(Inscripcion inscripcion : inscripciones){
+                for(Inscripcion inscripcion:inscripciones){
                     recaudacionCurso += curso.getPrecioActual();
                 }
                 recaudacionTotal += recaudacionCurso;
             }
             return "Total Recaudado: " + recaudacionTotal;
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
     public String reporteAnotadosAprobados(int cursoId) throws ServiceException {
-        try {
+        try{
             Curso curso = daoCurso.consultar(cursoId);
             if(curso == null){
                 throw new ServiceException("No se encontró el curso");
@@ -73,8 +75,22 @@ public class ServiceCurso {
             }
             return "Curso: " + curso.getNombre() + " - Anotados: " + anotados + " - Aprobados: " + aprobados + " - Porcentaje Aprobación: " + porcentajeAprobados + "%";
         }
-        catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
+        }
+    }
+
+    public int cantidadInscriptos(int cursoId) throws ServiceException {
+        try{
+            ArrayList<Inscripcion> inscripciones = daoInscripcion.consultarPorCurso(cursoId);
+            int cantidad = 0;
+            for(Inscripcion inscripcion:inscripciones){
+                cantidad++;
+            }
+            return cantidad;
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 }

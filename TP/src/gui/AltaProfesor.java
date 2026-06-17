@@ -1,6 +1,5 @@
 package gui;
 
-import entidades.Alumno;
 import entidades.Profesor;
 import service.ServiceAdministrador;
 import service.ServiceException;
@@ -46,8 +45,6 @@ public class AltaProfesor extends JPanel {
                 String apellido = jTextFieldApellido.getText();
                 String mail = jTextFieldMail.getText();
                 String departamento = jTextFieldDepartamento.getText();
-
-                // usuario y contraseña generados automaticamente
                 String usuario = nombre.toLowerCase() + "." + apellido.toLowerCase();
                 String contraseña = "1234";
 

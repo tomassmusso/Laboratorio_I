@@ -1,6 +1,5 @@
 package gui;
 
-import entidades.Alumno;
 import entidades.Profesor;
 import service.ServiceAdministrador;
 import service.ServiceException;
@@ -11,7 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.concurrent.locks.Condition;
 
 public class ListaProfesor extends JPanel {
     private PanelManager panelManager;
@@ -55,8 +53,8 @@ public class ListaProfesor extends JPanel {
                 contenido.addRow(fila);
             }
         }
-        catch(ServiceException e){
-            JOptionPane.showMessageDialog(null, "Error al cargar profesores: " + e.getMessage());
+        catch(ServiceException ex){
+            JOptionPane.showMessageDialog(null, "Error al cargar profesores: " + ex.getMessage());
         }
 
         jButtonAltaProfesor = new JButton("Alta Profesor");
@@ -79,7 +77,7 @@ public class ListaProfesor extends JPanel {
                     int id = Integer.parseInt(input);
                     Profesor profesor = serviceAdministrador.consultarProfesor(id);
                     if(profesor != null){
-                        panelManager.setUsuarioAModificar(profesor);
+                        panelManager.setUsuarioSeleccionado(profesor);
                         panelManager.mostrar(10);
                     }
                     else{
@@ -99,7 +97,7 @@ public class ListaProfesor extends JPanel {
                     int id = Integer.parseInt(input);
                     serviceAdministrador.eliminarProfesor(id);
                     JOptionPane.showMessageDialog(null, "Profesor despedido correctamente");
-                    panelManager.mostrar(8); // refresca la lista
+                    panelManager.mostrar(8);
                 }
                 catch(ServiceException ex){
                     JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
@@ -110,13 +108,13 @@ public class ListaProfesor extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String input = JOptionPane.showInputDialog("Ingrese ID del profesor a listar cursos dictados:");
-                try {
+                try{
                     int id = Integer.parseInt(input);
                     Profesor profesor = serviceAdministrador.consultarProfesor(id);
-                    panelManager.setUsuarioAModificar(profesor);
+                    panelManager.setUsuarioSeleccionado(profesor);
                     panelManager.mostrar(11);
                 }
-                catch (ServiceException ex) {
+                catch(ServiceException ex){
                     JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
                 }
             }

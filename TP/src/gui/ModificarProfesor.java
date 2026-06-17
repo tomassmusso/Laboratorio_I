@@ -27,7 +27,7 @@ public class ModificarProfesor extends JPanel {
 
     public void armarFormulario(){
         serviceProfesor = new ServiceProfesor();
-        Profesor profesor = (Profesor) panelManager.getUsuarioAModificar();
+        Profesor profesor = (Profesor) panelManager.getUsuarioSeleccionado();
         boolean esAdmin = panelManager.getUsuarioIniciado() instanceof Administrador;
 
         JLabel titulo = new JLabel("Modificar Datos", SwingConstants.CENTER);
@@ -37,7 +37,6 @@ public class ModificarProfesor extends JPanel {
         jButtonGuardar = new JButton("Guardar");
         jButtonVolver = new JButton("Volver");
 
-        // solo el profesor puede cambiar usuario y contraseña
         if(!esAdmin){
             jTextFieldUsuario = new JTextField(profesor.getUsuario());
             jPasswordFieldContraseña = new JPasswordField(profesor.getContraseña());
@@ -62,10 +61,10 @@ public class ModificarProfesor extends JPanel {
                     serviceProfesor.modificarProfesor(profesor);
                     JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");
                     if(esAdmin){
-                        panelManager.mostrar(8); // vuelve a lista profesores
+                        panelManager.mostrar(8);
                     }
                     else{
-                        panelManager.mostrar(3); // vuelve al menu profesor
+                        panelManager.mostrar(3);
                     }
                 }
                 catch(ServiceException ex){
@@ -86,7 +85,6 @@ public class ModificarProfesor extends JPanel {
             }
         });
 
-        // GridLayout dinámico según el rol
         if(esAdmin){
             setLayout(new GridLayout(7, 1));
         }

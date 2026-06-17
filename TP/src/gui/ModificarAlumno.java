@@ -27,7 +27,7 @@ public class ModificarAlumno extends JPanel {
 
     public void armarFormulario(){
         serviceAlumno = new ServiceAlumno();
-        Alumno alumno = (Alumno) panelManager.getUsuarioAModificar();
+        Alumno alumno = (Alumno) panelManager.getUsuarioSeleccionado();
         boolean esAdmin = panelManager.getUsuarioIniciado() instanceof Administrador;
 
         JLabel titulo = new JLabel("Modificar Datos", SwingConstants.CENTER);
@@ -37,7 +37,6 @@ public class ModificarAlumno extends JPanel {
         jButtonGuardar = new JButton("Guardar");
         jButtonVolver = new JButton("Volver");
 
-        // solo el alumno puede cambiar usuario y contraseña
         if(!esAdmin){
             jTextFieldUsuario = new JTextField(alumno.getUsuario());
             jPasswordFieldContraseña = new JPasswordField(alumno.getContraseña());
@@ -58,15 +57,17 @@ public class ModificarAlumno extends JPanel {
                 if(esAdmin){
                     alumno.setLimiteCursos(Integer.parseInt(jTextFieldLimiteCurso.getText()));
                 }
-                try {
+                try{
                     serviceAlumno.modificarAlumno(alumno);
                     JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");
                     if(esAdmin){
-                        panelManager.mostrar(5); // vuelve a lista alumnos
-                    } else {
-                        panelManager.mostrar(2); // vuelve al menu alumno
+                        panelManager.mostrar(5);
                     }
-                } catch (ServiceException ex) {
+                    else{
+                        panelManager.mostrar(2);
+                    }
+                }
+                catch(ServiceException ex){
                     JOptionPane.showMessageDialog(null, "Error al guardar: " + ex.getMessage());
                 }
             }
@@ -77,16 +78,17 @@ public class ModificarAlumno extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if(esAdmin){
                     panelManager.mostrar(5);
-                } else {
+                }
+                else{
                     panelManager.mostrar(2);
                 }
             }
         });
 
-        // GridLayout dinámico según el rol
         if(esAdmin){
             setLayout(new GridLayout(7, 1));
-        } else {
+        }
+        else{
             setLayout(new GridLayout(9, 1));
         }
 

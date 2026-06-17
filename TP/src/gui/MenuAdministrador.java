@@ -48,7 +48,7 @@ public class MenuAdministrador extends JPanel {
         jButtonVerCursos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panelManager.mostrar(11);
+                panelManager.mostrar(14);
             }
         });
         jButtonCerrarSesion.addActionListener(new ActionListener() {

@@ -177,7 +177,8 @@ public class DaoCurso implements Idao<Curso>{
         try {
             Class.forName(DB_JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            preparedStatement = connection.prepareStatement("SELECT * FROM Curso WHERE idProfesor");
+            preparedStatement = connection.prepareStatement("SELECT * FROM Curso WHERE idProfesor = ?");
+            preparedStatement.setInt(1, profesorId);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 String nombre = rs.getString("nombre");

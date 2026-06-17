@@ -25,8 +25,8 @@ public class ServiceProfesor {
         try{
             daoProfesor.modificar(profesor);
         }
-        catch (DaoException e){
-            throw new ServiceException(e.getMessage());
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
@@ -34,8 +34,8 @@ public class ServiceProfesor {
         try{
             return daoProfesor.consultar(profesorId);
         }
-        catch (DaoException e){
-            throw new ServiceException(e.getMessage());
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
@@ -43,8 +43,8 @@ public class ServiceProfesor {
         try{
             daoCurso.modificar(curso);
         }
-        catch (DaoException e){
-            throw new ServiceException(e.getMessage());
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
@@ -52,8 +52,8 @@ public class ServiceProfesor {
         try{
             return daoCurso.consultarPorProfesor(profesorId);
         }
-        catch (DaoException e){
-            throw new ServiceException(e.getMessage());
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
@@ -61,8 +61,8 @@ public class ServiceProfesor {
         try{
             return daoInscripcion.consultarPorCurso(cursoId);
         }
-        catch (DaoException e){
-            throw new ServiceException(e.getMessage());
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
@@ -76,8 +76,8 @@ public class ServiceProfesor {
             daoNotaParcial.agregar(notaParcial);
             inscripcion.agregarNotaParcial(notaParcial);
         }
-        catch (DaoException e){
-            throw new ServiceException(e.getMessage());
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
@@ -93,8 +93,8 @@ public class ServiceProfesor {
             }
             daoInscripcion.modificar(inscripcion);
         }
-        catch (DaoException e){
-            throw new ServiceException(e.getMessage());
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 }

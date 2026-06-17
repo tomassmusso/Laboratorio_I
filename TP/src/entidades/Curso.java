@@ -97,6 +97,38 @@ public class Curso {
         this.idCurso = idCurso;
     }
 
+    public void setCupo(int cupo) {
+        this.cupo = cupo;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public void setFechaInicioDescuento(Date fechaInicioDescuento) {
+        this.fechaInicioDescuento = fechaInicioDescuento;
+    }
+
+    public void setFechaFinDescuento(Date fechaFinDescuento) {
+        this.fechaFinDescuento = fechaFinDescuento;
+    }
+
+    public void setPrecioDescuento(double precioDescuento) {
+        this.precioDescuento = precioDescuento;
+    }
+
+    public void setCantidadParciales(int cantidadParciales) {
+        this.cantidadParciales = cantidadParciales;
+    }
+
+    public void setNotaAprobacion(double notaAprobacion) {
+        this.notaAprobacion = notaAprobacion;
+    }
+
+    public void setNotaPromocion(double notaPromocion) {
+        this.notaPromocion = notaPromocion;
+    }
+
     // MÉTODOS
     public double getPrecioActual(){
         Date hoy = new Date();

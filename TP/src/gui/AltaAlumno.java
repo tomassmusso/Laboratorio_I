@@ -46,16 +46,16 @@ public class AltaAlumno extends JPanel {
                 String mail = jTextFieldMail.getText();
                 int limiteCursos = Integer.parseInt(jTextFieldLimiteCursos.getText());
 
-                // usuario y contraseña generados automaticamente
                 String usuario = nombre.toLowerCase() + "." + apellido.toLowerCase();
                 String contraseña = "1234";
 
                 Alumno alumno = new Alumno(nombre, apellido, mail, usuario, contraseña, limiteCursos);
-                try {
+                try{
                     serviceAdministrador.crearAlumno(alumno);
                     JOptionPane.showMessageDialog(null, "Alumno creado correctamente. Usuario: " + usuario + " - Contraseña: " + contraseña);
                     panelManager.mostrar(5);
-                } catch (ServiceException ex) {
+                }
+                catch(ServiceException ex){
                     JOptionPane.showMessageDialog(null, "Error al guardar: " + ex.getMessage());
                 }
             }

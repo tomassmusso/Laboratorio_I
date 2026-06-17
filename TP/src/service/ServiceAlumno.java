@@ -18,17 +18,17 @@ public class ServiceAlumno {
         try{
             daoAlumno.modificar(alumno);
         }
-        catch (DaoException e){
-            throw new ServiceException(e.getMessage());
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
     public Alumno consultarAlumno(int id) throws ServiceException{
-        try {
+        try{
             return daoAlumno.consultar(id);
         }
-        catch (DaoException e){
-            throw new ServiceException(e.getMessage());
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
@@ -36,8 +36,8 @@ public class ServiceAlumno {
         try{
             return daoInscripcion.consultarPorAlumno(alumnoId);
         }
-        catch (DaoException e){
-            throw new ServiceException(e.getMessage());
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
@@ -45,8 +45,8 @@ public class ServiceAlumno {
         try{
             return daoInscripcion.consultar(inscripcionId);
         }
-        catch (DaoException e){
-            throw new ServiceException(e.getMessage());
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 }

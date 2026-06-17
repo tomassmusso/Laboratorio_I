@@ -19,131 +19,142 @@ public class ServiceAdministrador {
         daoInscripcion = new DaoInscripcion();
     }
 
-    // ===== ALUMNO =====
     public void crearAlumno(Alumno alumno) throws ServiceException {
-        try {
+        try{
             daoAlumno.agregar(alumno);
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
     public void modificarAlumno(Alumno alumno) throws ServiceException {
-        try {
+        try{
             daoAlumno.modificar(alumno);
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
     public void eliminarAlumno(int id) throws ServiceException {
-        try {
+        try{
             daoAlumno.eliminar(id);
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
     public Alumno consultarAlumno(int id) throws ServiceException {
-        try {
+        try{
             return daoAlumno.consultar(id);
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
     public ArrayList<Alumno> consultarTodosAlumnos() throws ServiceException {
-        try {
+        try{
             return daoAlumno.consultarTodos();
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
-    // ===== PROFESOR =====
     public void crearProfesor(Profesor profesor) throws ServiceException {
-        try {
+        try{
             daoProfesor.agregar(profesor);
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
     public void modificarProfesor(Profesor profesor) throws ServiceException {
-        try {
+        try{
             daoProfesor.modificar(profesor);
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
     public void eliminarProfesor(int id) throws ServiceException {
-        try {
+        try{
             daoProfesor.eliminar(id);
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
     public Profesor consultarProfesor(int id) throws ServiceException {
-        try {
+        try{
             return daoProfesor.consultar(id);
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
     public ArrayList<Profesor> consultarTodosProfesores() throws ServiceException {
-        try {
+        try{
             return daoProfesor.consultarTodos();
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
-    // ===== CURSO =====
     public void crearCurso(Curso curso) throws ServiceException {
-        try {
+        try{
             daoCurso.agregar(curso);
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
     public void modificarCurso(Curso curso) throws ServiceException {
-        try {
+        try{
             daoCurso.modificar(curso);
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
     public void eliminarCurso(int id) throws ServiceException {
-        try {
-            daoInscripcion.eliminarPorCurso(id); // primero elimina inscripciones
+        try{
+            daoInscripcion.eliminarPorCurso(id);
             daoCurso.eliminar(id);
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
     public Curso consultarCurso(int id) throws ServiceException {
-        try {
+        try{
             return daoCurso.consultar(id);
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
     public ArrayList<Curso> consultarTodosCursos() throws ServiceException {
-        try {
+        try{
             return daoCurso.consultarTodos();
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 
-    // ===== INSCRIPCION =====
     public void inscribirAlumno(int alumnoId, int cursoId) throws ServiceException {
         try {
             Alumno alumno = daoAlumno.consultar(alumnoId);
@@ -155,23 +166,33 @@ public class ServiceAdministrador {
             if(curso == null){
                 throw new ServiceException("No se encontró el curso");
             }
-            if(!alumno.puedeInscribirse()){
+
+            ArrayList<Inscripcion> inscripcionesAlumno = daoInscripcion.consultarPorAlumno(alumnoId);
+            int cantidad = 0;
+            for(Inscripcion inscripcion:inscripcionesAlumno){
+                cantidad++;
+                if(inscripcion.getCurso().getIdCurso() == cursoId){
+                    throw new ServiceException("El alumno ya está inscripto en este curso");
+                }
+            }
+            if(cantidad >= alumno.getLimiteCursos()){
                 throw new ServiceException("El alumno alcanzó su límite de cursos");
             }
 
             ArrayList<Inscripcion> inscripcionesCurso = daoInscripcion.consultarPorCurso(cursoId);
             int anotados = 0;
-            for(Inscripcion i : inscripcionesCurso){ anotados++; }
+            for(Inscripcion iinscripcion:inscripcionesCurso){
+                anotados++;
+            }
             if(anotados >= curso.getCupo()){
                 throw new ServiceException("El curso no tiene cupo disponible");
             }
-
             Inscripcion inscripcion = new Inscripcion(alumno, curso);
             daoInscripcion.agregar(inscripcion);
             alumno.inscribirseACurso(inscripcion);
-
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage());
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
         }
     }
 }

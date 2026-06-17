@@ -38,9 +38,9 @@ public class ListaInscripcion extends JPanel {
         contenido.addColumn("Notas Parciales");
         contenido.addColumn("Nota Final");
 
-        try {
+        try{
             ArrayList<Inscripcion> inscripciones = serviceAlumno.consultarInscripciones(alumno.getId());
-            for(Inscripcion inscripcion : inscripciones){
+            for(Inscripcion inscripcion:inscripciones){
                 Object[] fila = new Object[5];
                 fila[0] = inscripcion.getInscripcionId();
                 fila[1] = inscripcion.getCurso().getNombre();
@@ -49,8 +49,9 @@ public class ListaInscripcion extends JPanel {
                 fila[4] = inscripcion.getNotaFinal() != null ? inscripcion.getNotaFinal() : "Sin nota";
                 contenido.addRow(fila);
             }
-        } catch(ServiceException e){
-            JOptionPane.showMessageDialog(null, "Error al cargar inscripciones: " + e.getMessage());
+        }
+        catch(ServiceException ex){
+            JOptionPane.showMessageDialog(null, "Error al cargar inscripciones: " + ex.getMessage());
         }
 
         jButtonVolver = new JButton("Volver");

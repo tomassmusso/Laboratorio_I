@@ -41,9 +41,9 @@ public class ListaAlumno extends JPanel {
         contenido.addColumn("Mail");
         contenido.addColumn("Limite Cursos");
 
-        try {
+        try{
             ArrayList<Alumno> alumnos = serviceAdministrador.consultarTodosAlumnos();
-            for(Alumno alumno : alumnos){
+            for(Alumno alumno:alumnos){
                 Object[] fila = new Object[5];
                 fila[0] = alumno.getId();
                 fila[1] = alumno.getNombre();
@@ -52,8 +52,9 @@ public class ListaAlumno extends JPanel {
                 fila[4] = alumno.getLimiteCursos();
                 contenido.addRow(fila);
             }
-        } catch(ServiceException e){
-            JOptionPane.showMessageDialog(null, "Error al cargar alumnos: " + e.getMessage());
+        }
+        catch(ServiceException ex){
+            JOptionPane.showMessageDialog(null, "Error al cargar alumnos: " + ex.getMessage());
         }
 
         jButtonAltaAlumno = new JButton("Alta Alumno");
@@ -73,16 +74,18 @@ public class ListaAlumno extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String input = JOptionPane.showInputDialog("Ingrese el ID del alumno a modificar:");
-                try {
+                try{
                     int id = Integer.parseInt(input);
                     Alumno alumno = serviceAdministrador.consultarAlumno(id);
                     if(alumno != null){
-                        panelManager.setUsuarioAModificar(alumno);
+                        panelManager.setUsuarioSeleccionado(alumno);
                         panelManager.mostrar(7);
-                    } else {
+                    }
+                    else{
                         JOptionPane.showMessageDialog(null, "No se encontró el alumno");
                     }
-                } catch(ServiceException ex){
+                }
+                catch(ServiceException ex){
                     JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
                 }
             }
@@ -92,12 +95,13 @@ public class ListaAlumno extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String input = JOptionPane.showInputDialog("Ingrese el ID del alumno a eliminar:");
-                try {
+                try{
                     int id = Integer.parseInt(input);
                     serviceAdministrador.eliminarAlumno(id);
                     JOptionPane.showMessageDialog(null, "Alumno eliminado correctamente");
-                    panelManager.mostrar(5); // refresca la lista
-                } catch(ServiceException ex){
+                    panelManager.mostrar(5);
+                }
+                catch(ServiceException ex){
                     JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
                 }
             }
@@ -108,12 +112,13 @@ public class ListaAlumno extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String inputAlumno = JOptionPane.showInputDialog("Ingrese el ID del alumno:");
                 String inputCurso = JOptionPane.showInputDialog("Ingrese el ID del curso:");
-                try {
+                try{
                     int alumnoId = Integer.parseInt(inputAlumno);
                     int cursoId = Integer.parseInt(inputCurso);
                     serviceAdministrador.inscribirAlumno(alumnoId, cursoId);
                     JOptionPane.showMessageDialog(null, "Alumno inscripto correctamente");
-                } catch(ServiceException ex){
+                }
+                catch(ServiceException ex){
                     JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
                 }
             }

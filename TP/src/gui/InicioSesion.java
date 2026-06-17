@@ -39,29 +39,28 @@ public class InicioSesion extends JPanel {
         formulario.add(jTextFieldUsuario);
         formulario.add(jLabelContraseña);
         formulario.add(jPasswordFieldContraseña);
-        formulario.add(new JLabel()); // celda vacía para alinear el botón
+        formulario.add(new JLabel());
         formulario.add(jButtonIngresar);
 
         jButtonIngresar.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent event) {
+            public void actionPerformed(ActionEvent e) {
                 String usuario = jTextFieldUsuario.getText();
                 String contraseña = new String(jPasswordFieldContraseña.getPassword());
-                try {
+                try{
                     Usuario logueado = serviceUsuario.inicioSesion(usuario, contraseña);
                     panelManager.setUsuarioIniciado(logueado);
-                    // redirige según el rol
                     if(logueado instanceof entidades.Alumno){
-                        panelManager.mostrar(2); // menuAlumno
+                        panelManager.mostrar(2);
                     }
                     else if(logueado instanceof entidades.Profesor){
-                        panelManager.mostrar(3); // menuProfesor
+                        panelManager.mostrar(3);
                     }
                     else if(logueado instanceof entidades.Administrador){
-                        panelManager.mostrar(4); // menuAdmin
+                        panelManager.mostrar(4);
                     }
-                } catch (ServiceException e) {
-                    e.printStackTrace();
+                }
+                catch(ServiceException ex){
                     JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
                 }
             }
