@@ -45,7 +45,9 @@ CREATE TABLE Curso (
     notaAprobacion DOUBLE NOT NULL,
     notaPromocion DOUBLE NOT NULL,
 
-    FOREIGN KEY (idProfesor) REFERENCES Profesor(id)
+    FOREIGN KEY (idProfesor)
+    REFERENCES Profesor(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE Inscripcion (
@@ -56,7 +58,7 @@ CREATE TABLE Inscripcion (
     finalizada BOOLEAN DEFAULT FALSE,
 
     FOREIGN KEY (alumnoId) REFERENCES Alumno(id),
-    FOREIGN KEY (cursoId) REFERENCES Curso(id)
+    FOREIGN KEY (cursoId) REFERENCES Curso(id) ON DELETE CASCADE
 );
 
 CREATE TABLE NotaParcial (
