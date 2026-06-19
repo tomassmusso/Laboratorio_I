@@ -48,6 +48,15 @@ public class ServiceProfesor {
         }
     }
 
+    public Curso consultarCurso(int id) throws ServiceException {
+        try{
+            return daoCurso.consultar(id);
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
+        }
+    }
+
     public ArrayList<Curso> consultarCursos(int profesorId) throws ServiceException{
         try{
             return daoCurso.consultarPorProfesor(profesorId);
@@ -57,7 +66,7 @@ public class ServiceProfesor {
         }
     }
 
-    public ArrayList<Inscripcion> consultarAlumnos(int cursoId) throws ServiceException{
+    public ArrayList<Inscripcion> consultarInscripciones(int cursoId) throws ServiceException{
         try{
             return daoInscripcion.consultarPorCurso(cursoId);
         }
@@ -74,6 +83,9 @@ public class ServiceProfesor {
             }
             NotaParcial notaParcial = new NotaParcial(inscripcionId, nota);
             daoNotaParcial.agregar(notaParcial);
+            if(inscripcion.cantidadNotasCargadas() >= inscripcion.getCurso().getCantidadParciales()){
+                throw new ServiceException("Ya se cargaron todos los parciales");
+            }
             inscripcion.agregarNotaParcial(notaParcial);
         }
         catch(DaoException ex){

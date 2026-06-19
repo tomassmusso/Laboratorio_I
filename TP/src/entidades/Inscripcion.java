@@ -64,13 +64,8 @@ public class Inscripcion {
     }
 
     public void setNotaFinal(Double notaFinal) {
-        if(materiaPromocionada()){
-            this.notaFinal = calcularPromedio();
-            this.finalizada = true;
-        } else if(materiaAprobada()){
             this.notaFinal = notaFinal;
             this.finalizada = true;
-        }
     }
 
     // MÉTODOS
@@ -104,12 +99,12 @@ public class Inscripcion {
         return promedio;
     }
 
-    public boolean materiaAprobada(){
-        return calcularPromedio() >= curso.getNotaAprobacion();
+    public boolean materiaAprobada() {
+        return notaFinal != null && notaFinal >= curso.getNotaAprobacion();
     }
 
-    public boolean materiaPromocionada(){
-        return calcularPromedio() >= curso.getNotaPromocion();
+    public boolean materiaPromocionada() {
+        return notaFinal != null && notaFinal >= curso.getNotaPromocion();
     }
 
     public String toString(){

@@ -1,5 +1,6 @@
 package gui;
 
+import entidades.Administrador;
 import entidades.Curso;
 import service.ServiceCurso;
 import service.ServiceException;
@@ -21,6 +22,7 @@ public class ReporteCurso extends JPanel {
 
     public void armarReporte(){
         serviceCurso = new ServiceCurso();
+        boolean esAdmin = panelManager.getUsuarioIniciado() instanceof Administrador;
 
         Curso curso = panelManager.getCursoSeleccionado();
 
@@ -30,7 +32,7 @@ public class ReporteCurso extends JPanel {
         try{
             reporte = new JLabel(serviceCurso.reporteAnotadosAprobados(curso.getIdCurso()), SwingConstants.CENTER);
         }
-        catch (ServiceException ex){
+        catch(ServiceException ex){
             JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
         }
 
@@ -39,7 +41,12 @@ public class ReporteCurso extends JPanel {
         jButtonVolver.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panelManager.mostrar(14);
+                if(esAdmin){
+                    panelManager.mostrar(14);
+                }
+                else{
+                    panelManager.mostrar(11);
+                }
             }
         });
 

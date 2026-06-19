@@ -74,7 +74,7 @@ public class ModificarCurso extends JPanel {
                         panelManager.mostrar(14);
                     }
                     else{
-                        panelManager.mostrar(3);
+                        panelManager.mostrar(11);
                     }
                 }
                 catch(ServiceException ex){
@@ -90,7 +90,7 @@ public class ModificarCurso extends JPanel {
                     panelManager.mostrar(14);
                 }
                 else{
-                    panelManager.mostrar(3);
+                    panelManager.mostrar(11);
                 }
             }
         });

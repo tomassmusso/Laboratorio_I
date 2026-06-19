@@ -49,11 +49,13 @@ public class ListaCurso extends JPanel {
         contenido.addColumn("Cursada");
         contenido.addColumn("Cantidad Parciales");
         contenido.addColumn("Precio");
+        contenido.addColumn("Nota Aprobación");
+        contenido.addColumn("Nota Promoción");
 
         try{
             ArrayList<Curso> cursos = serviceAdministrador.consultarTodosCursos();
             for(Curso curso:cursos){
-                Object[] fila = new Object[8];
+                Object[] fila = new Object[10];
                 fila[0] = curso.getIdCurso();
                 fila[1] = curso.getNombre();
                 fila[2] = curso.getCupo();
@@ -62,6 +64,8 @@ public class ListaCurso extends JPanel {
                 fila[5] = curso.getFechaInicio() + " - " + curso.getFechaFin();
                 fila[6] = curso.getCantidadParciales();
                 fila[7] = curso.getPrecioActual();
+                fila[8] = curso.getNotaAprobacion();
+                fila[9] = curso.getNotaPromocion();
                 contenido.addRow(fila);
             }
         }

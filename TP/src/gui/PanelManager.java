@@ -28,6 +28,7 @@ public class PanelManager {
     private ReporteRecaudacion reporteRecaudacion;
     private ReporteCurso reporteCurso;
     private ModificarCurso modificarCurso;
+    private ListaInscriptos listaInscriptos;
 
     public PanelManager(){
         jFrame = new JFrame("Sistema de Alumnos");
@@ -137,6 +138,10 @@ public class PanelManager {
             case 17:
                 listaInscripcion = new ListaInscripcion(this);
                 mostrar(listaInscripcion);
+                break;
+            case 18:
+                listaInscriptos = new ListaInscriptos(this);
+                mostrar(listaInscriptos);
                 break;
         }
     }
