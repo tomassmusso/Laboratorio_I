@@ -56,8 +56,7 @@ CREATE TABLE Inscripcion (
     cursoId INT NOT NULL,
     notaFinal DOUBLE,
     finalizada BOOLEAN DEFAULT FALSE,
-
-    FOREIGN KEY (alumnoId) REFERENCES Alumno(id),
+    FOREIGN KEY (alumnoId) REFERENCES Alumno(id) ON DELETE CASCADE,
     FOREIGN KEY (cursoId) REFERENCES Curso(id) ON DELETE CASCADE
 );
 
