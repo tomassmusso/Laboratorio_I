@@ -82,10 +82,10 @@ public class ServiceProfesor {
                 throw new ServiceException("No se encontró la inscripción");
             }
             NotaParcial notaParcial = new NotaParcial(inscripcionId, nota);
-            daoNotaParcial.agregar(notaParcial);
             if(inscripcion.cantidadNotasCargadas() >= inscripcion.getCurso().getCantidadParciales()){
                 throw new ServiceException("Ya se cargaron todos los parciales");
             }
+            daoNotaParcial.agregar(notaParcial);
             inscripcion.agregarNotaParcial(notaParcial);
         }
         catch(DaoException ex){

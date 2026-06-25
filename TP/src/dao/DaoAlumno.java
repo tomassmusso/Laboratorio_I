@@ -92,6 +92,7 @@ public class DaoAlumno implements Idao<Alumno>{
                 int limiteCursos = rs.getInt("limiteCursos");
                 alumno = new Alumno(nombre, apellido, mail, usuario, contraseña, limiteCursos);
                 alumno.setId(rs.getInt("id"));
+                alumno.setDeuda(rs.getDouble("deuda"));
             }
         }
         catch (ClassNotFoundException | SQLException e) {
@@ -119,6 +120,7 @@ public class DaoAlumno implements Idao<Alumno>{
                 int limiteCursos = rs.getInt("limiteCursos");
                 Alumno alumno = new Alumno(nombre, apellido, mail, usuario, contraseña, limiteCursos);
                 alumno.setId(rs.getInt("id"));
+                alumno.setDeuda(rs.getDouble("deuda"));
                 alumnos.add(alumno);
             }
         }
@@ -148,8 +150,10 @@ public class DaoAlumno implements Idao<Alumno>{
                 int limiteCursos = rs.getInt("limiteCursos");
                 alumno = new Alumno(nombre, apellido, mail, usuarioAlumno, contraseñaAlumno, limiteCursos);
                 alumno.setId(rs.getInt("id"));
+                alumno.setDeuda(rs.getDouble("deuda"));
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        }
+        catch (ClassNotFoundException | SQLException e) {
             throw new DaoException("Error en login: " + e.getMessage());
         }
         return alumno;

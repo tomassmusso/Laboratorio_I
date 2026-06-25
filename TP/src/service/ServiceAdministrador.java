@@ -4,7 +4,6 @@ import dao.*;
 import entidades.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ServiceAdministrador {
     private DaoAlumno daoAlumno;
@@ -168,14 +167,16 @@ public class ServiceAdministrador {
             }
 
             ArrayList<Inscripcion> inscripcionesAlumno = daoInscripcion.consultarPorAlumno(alumnoId);
-            int cantidad = 0;
+            int activas = 0;
             for(Inscripcion inscripcion:inscripcionesAlumno){
-                cantidad++;
                 if(inscripcion.getCurso().getIdCurso() == cursoId){
                     throw new ServiceException("El alumno ya está inscripto en este curso");
                 }
+                if(!inscripcion.isFinalizada()){
+                    activas++;
+                }
             }
-            if(cantidad >= alumno.getLimiteCursos()){
+            if(activas >= alumno.getLimiteCursos()){
                 throw new ServiceException("El alumno alcanzó su límite de cursos");
             }
 

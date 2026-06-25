@@ -51,9 +51,10 @@ public class DaoInscripcion implements Idao<Inscripcion>{
         try{
             Class.forName(DB_JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            preparedStatement = connection.prepareStatement("UPDATE Inscripcion SET notaFinal=? WHERE id=?");
+            preparedStatement = connection.prepareStatement("UPDATE Inscripcion SET notaFinal=?, finalizada=? WHERE id=?");
             preparedStatement.setDouble(1, elemento.getNotaFinal());
-            preparedStatement.setInt(2, elemento.getInscripcionId());
+            preparedStatement.setBoolean(2, elemento.isFinalizada());
+            preparedStatement.setInt(3, elemento.getInscripcionId());
             int resultado = preparedStatement.executeUpdate();
         }
         catch (ClassNotFoundException | SQLException e){
@@ -87,6 +88,7 @@ public class DaoInscripcion implements Idao<Inscripcion>{
                 if(!rs.wasNull()){
                     inscripcion.setNotaFinal(notaFinal);
                 }
+                inscripcion.setFinalizada(rs.getBoolean("finalizada"));
 
                 DaoNotaParcial daoNotaParcial = new DaoNotaParcial();
                 ArrayList<NotaParcial> notas = daoNotaParcial.consultarPorInscripcion(inscripcion.getInscripcionId());
@@ -127,6 +129,7 @@ public class DaoInscripcion implements Idao<Inscripcion>{
                 if(!rs.wasNull()){
                     inscripcion.setNotaFinal(notaFinal);
                 }
+                inscripcion.setFinalizada(rs.getBoolean("finalizada"));
 
                 DaoNotaParcial daoNotaParcial = new DaoNotaParcial();
                 ArrayList<NotaParcial> notas = daoNotaParcial.consultarPorInscripcion(inscripcion.getInscripcionId());
@@ -136,7 +139,8 @@ public class DaoInscripcion implements Idao<Inscripcion>{
 
                 inscripciones.add(inscripcion);
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        }
+        catch (ClassNotFoundException | SQLException e) {
             throw new DaoException("Error al consultar inscripciones: " + e.getMessage());
         }
         return inscripciones;
@@ -164,6 +168,8 @@ public class DaoInscripcion implements Idao<Inscripcion>{
                 if(!rs.wasNull()){
                     inscripcion.setNotaFinal(notaFinal);
                 }
+                inscripcion.setFinalizada(rs.getBoolean("finalizada"));
+
                 DaoNotaParcial daoNotaParcial = new DaoNotaParcial();
                 ArrayList<NotaParcial> notas = daoNotaParcial.consultarPorInscripcion(inscripcion.getInscripcionId());
                 for(NotaParcial nota:notas){
@@ -200,6 +206,8 @@ public class DaoInscripcion implements Idao<Inscripcion>{
                 if(!rs.wasNull()){
                     inscripcion.setNotaFinal(notaFinal);
                 }
+                inscripcion.setFinalizada(rs.getBoolean("finalizada"));
+
                 DaoNotaParcial daoNotaParcial = new DaoNotaParcial();
                 ArrayList<NotaParcial> notas = daoNotaParcial.consultarPorInscripcion(inscripcion.getInscripcionId());
                 for(NotaParcial nota:notas){
@@ -225,7 +233,8 @@ public class DaoInscripcion implements Idao<Inscripcion>{
             );
             preparedStatement.setInt(1, cursoId);
             int resultado = preparedStatement.executeUpdate();
-        } catch (ClassNotFoundException | SQLException e) {
+        }
+        catch (ClassNotFoundException | SQLException e) {
             throw new DaoException("Error al eliminar inscripciones por curso: " + e.getMessage());
         }
     }

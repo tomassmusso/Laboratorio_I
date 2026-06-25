@@ -115,7 +115,7 @@ public class DaoAdministrador implements Idao<Administrador>{
                 String mail = rs.getString("mail");
                 String usuario = rs.getString("usuario");
                 String contraseña = rs.getString("contraseña");
-                String sector = rs.getString("Sector");
+                String sector = rs.getString("sector");
                 Administrador administrador = new Administrador(nombre, apellido, mail, usuario, contraseña, sector);
                 administrador.setId(rs.getInt("id"));
                 administradores.add(administrador);

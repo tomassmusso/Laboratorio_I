@@ -38,6 +38,10 @@ public class Alumno extends Usuario {
         this.limiteCursos = limiteCursos;
     }
 
+    public void setDeuda(double deuda){
+        this.deuda = deuda;
+    }
+
     // MÉTODOS
     public boolean puedeInscribirse(){
         int activas = 0;
