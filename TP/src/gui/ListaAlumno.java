@@ -1,7 +1,9 @@
 package gui;
 
 import entidades.Alumno;
+import entidades.Curso;
 import service.ServiceAdministrador;
+import service.ServiceCurso;
 import service.ServiceException;
 
 import javax.swing.*;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 public class ListaAlumno extends JPanel {
     private PanelManager panelManager;
     private ServiceAdministrador serviceAdministrador;
+    private ServiceCurso serviceCurso;
     private JTable jTable;
     private DefaultTableModel contenido;
     private JScrollPane jScrollPane;
@@ -30,6 +33,7 @@ public class ListaAlumno extends JPanel {
 
     public void armarLista(){
         serviceAdministrador = new ServiceAdministrador();
+        serviceCurso = new ServiceCurso();
 
         contenido = new DefaultTableModel();
         jTable = new JTable(contenido);
@@ -97,8 +101,16 @@ public class ListaAlumno extends JPanel {
                 String input = JOptionPane.showInputDialog("Ingrese el ID del alumno a eliminar:");
                 try{
                     int id = Integer.parseInt(input);
-                    serviceAdministrador.eliminarAlumno(id);
-                    JOptionPane.showMessageDialog(null, "Alumno eliminado correctamente");
+                    Alumno alumno = serviceAdministrador.consultarAlumno(id);
+                    int opcion = JOptionPane.showConfirmDialog(null,"¿Seguro que desea eliminar este alumno?\n" + alumno.getNombre() + " " + alumno.getApellido(), "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+                    if(opcion == JOptionPane.YES_OPTION){
+                        serviceAdministrador.eliminarAlumno(id);
+                        JOptionPane.showMessageDialog(null, "Alumno eliminado correctamente");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Alumno no eliminado");
+                    }
                     panelManager.mostrar(5);
                 }
                 catch(ServiceException ex){
@@ -110,12 +122,25 @@ public class ListaAlumno extends JPanel {
         jButtonInscribir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String inputAlumno = JOptionPane.showInputDialog("Ingrese el ID del alumno:");
-                String inputCurso = JOptionPane.showInputDialog("Ingrese el ID del curso:");
                 try{
+                    String inputAlumno = JOptionPane.showInputDialog("Ingrese el ID del alumno:");
+                    ArrayList<Curso> cursos = serviceAdministrador.consultarTodosCursos();
+
+                    String mensaje = "Cursos disponibles:\n\n";
+
+                    for(Curso curso:cursos){
+                        mensaje += curso.getIdCurso() + " - " + curso.getNombre() + " - " + curso.getTurno() + " - Cupo: " + curso.getCupo() + " - Anotados: " + serviceCurso.cantidadInscriptos(curso.getIdCurso()) + "\n";
+                    }
+
+                    JOptionPane.showMessageDialog(null, mensaje);
+
+                    String inputCurso = JOptionPane.showInputDialog("Ingrese el ID del curso:");
+
                     int alumnoId = Integer.parseInt(inputAlumno);
                     int cursoId = Integer.parseInt(inputCurso);
+
                     serviceAdministrador.inscribirAlumno(alumnoId, cursoId);
+
                     JOptionPane.showMessageDialog(null, "Alumno inscripto correctamente");
                 }
                 catch(ServiceException ex){

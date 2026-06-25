@@ -112,8 +112,16 @@ public class ListaCurso extends JPanel {
                 String input = JOptionPane.showInputDialog("Ingrese el ID del curso a eliminar:");
                 try{
                     int id = Integer.parseInt(input);
-                    serviceAdministrador.eliminarCurso(id);
-                    JOptionPane.showMessageDialog(null, "Curso eliminado correctamente");
+                    Curso curso = serviceAdministrador.consultarCurso(id);
+                    int opcion = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar este curso?\nSe eliminarán también sus inscripciones\n" + curso.getNombre(), "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+                    if(opcion == JOptionPane.YES_OPTION){
+                        serviceAdministrador.eliminarCurso(id);
+                        JOptionPane.showMessageDialog(null, "Curso eliminado correctamente");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Curso no eliminado");
+                    }
                     panelManager.mostrar(14);
                 }
                 catch(ServiceException ex){

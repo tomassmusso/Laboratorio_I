@@ -95,8 +95,16 @@ public class ListaProfesor extends JPanel {
                 String input = JOptionPane.showInputDialog("Ingrese el ID del profesor a despedir:");
                 try{
                     int id = Integer.parseInt(input);
-                    serviceAdministrador.eliminarProfesor(id);
-                    JOptionPane.showMessageDialog(null, "Profesor despedido correctamente");
+                    Profesor profesor = serviceAdministrador.consultarProfesor(id);
+                    int opcion = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar este profesor?\nSe eliminarán también sus cursos\n" + profesor.getNombre() + " " + profesor.getApellido(), "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+                    if(opcion == JOptionPane.YES_OPTION){
+                        serviceAdministrador.eliminarProfesor(id);
+                        JOptionPane.showMessageDialog(null, "Porfesor eliminado correctamente");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Profesor no eliminado");
+                    }
                     panelManager.mostrar(8);
                 }
                 catch(ServiceException ex){
