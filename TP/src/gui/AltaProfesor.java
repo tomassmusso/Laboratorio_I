@@ -51,7 +51,7 @@ public class AltaProfesor extends JPanel {
                 Profesor profesor = new Profesor(nombre, apellido, mail, usuario, contraseña, departamento);
                 try{
                     serviceAdministrador.crearProfesor(profesor);
-                    JOptionPane.showMessageDialog(null, "Profesor creado correctamente. Usuario: " + usuario + " - Contraseña: " + contraseña);
+                    JOptionPane.showMessageDialog(null, "Profesor creado correctamente. \nUsuario: " + usuario + " - Contraseña: " + contraseña);
                     panelManager.mostrar(8);
                 }
                 catch(ServiceException ex){

@@ -11,6 +11,7 @@ public class MenuAlumno extends JPanel {
     private PanelManager panelManager;
     private JButton jButtonMisDatos;
     private JButton jButtonMisInscripciones;
+    private JButton jButtonAranceles;
     private JButton jButtonCerrarSesion;
 
     public MenuAlumno(PanelManager panelManager){
@@ -32,6 +33,7 @@ public class MenuAlumno extends JPanel {
         jButtonMisDatos = new JButton("Modificar mis datos");
         jButtonMisInscripciones = new JButton("Mis inscripciones");
         jButtonCerrarSesion = new JButton("Cerrar sesión");
+        jButtonAranceles = new JButton("Aranceles");
 
         jButtonMisDatos.addActionListener(new ActionListener(){
             @Override
@@ -46,6 +48,12 @@ public class MenuAlumno extends JPanel {
                 panelManager.mostrar(17);
             }
         });
+        jButtonAranceles.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panelManager.mostrar(19);
+            }
+        });
         jButtonCerrarSesion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,7 +62,7 @@ public class MenuAlumno extends JPanel {
             }
         });
 
-        setLayout(new GridLayout(9, 1));
+        setLayout(new GridLayout(10, 1));
         add(titulo);
         add(labelNombre);
         add(labelMail);
@@ -63,6 +71,7 @@ public class MenuAlumno extends JPanel {
         add(labelDeuda);
         add(jButtonMisDatos);
         add(jButtonMisInscripciones);
+        add(jButtonAranceles);
         add(jButtonCerrarSesion);
     }
 }

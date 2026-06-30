@@ -74,6 +74,10 @@ public class ListaInscriptos extends JPanel {
                     int inscripcionId = Integer.parseInt(inputId);
                     String inputNota = JOptionPane.showInputDialog("Ingrese nota parcial:");
                     double nota = Double.parseDouble(inputNota);
+                    if(nota < 1 || nota > 10){
+                        JOptionPane.showMessageDialog(null, "Nota inválida");
+                        return;
+                    }
                     serviceProfesor.agregarNotaParcial(inscripcionId, nota);
                     JOptionPane.showMessageDialog(null, "Nota cargada correctamente");
                     panelManager.mostrar(18);
@@ -91,6 +95,10 @@ public class ListaInscriptos extends JPanel {
                     int inscripcionId = Integer.parseInt(inputId);
                     String inputNota = JOptionPane.showInputDialog("Ingrese nota final:");
                     double nota = Double.parseDouble(inputNota);
+                    if(nota < 1 || nota > 10){
+                        JOptionPane.showMessageDialog(null, "Nota inválida");
+                        return;
+                    }
                     serviceProfesor.agregarNotaFinal(inscripcionId, nota);
                     JOptionPane.showMessageDialog(null, "Nota final cargada correctamente");
                     panelManager.mostrar(18);

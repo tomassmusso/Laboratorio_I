@@ -52,7 +52,7 @@ public class AltaAlumno extends JPanel {
                 Alumno alumno = new Alumno(nombre, apellido, mail, usuario, contraseña, limiteCursos);
                 try{
                     serviceAdministrador.crearAlumno(alumno);
-                    JOptionPane.showMessageDialog(null, "Alumno creado correctamente. Usuario: " + usuario + " - Contraseña: " + contraseña);
+                    JOptionPane.showMessageDialog(null, "Alumno creado correctamente. \nUsuario: " + usuario + " - Contraseña: " + contraseña);
                     panelManager.mostrar(5);
                 }
                 catch(ServiceException ex){

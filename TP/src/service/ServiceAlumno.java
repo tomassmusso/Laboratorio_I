@@ -49,4 +49,25 @@ public class ServiceAlumno {
             throw new ServiceException(ex.getMessage());
         }
     }
+
+    public void pagarDeuda(int alumnoId, double monto) throws ServiceException {
+        try{
+            Alumno alumno = daoAlumno.consultar(alumnoId);
+
+            if(alumno == null){
+                throw new ServiceException("No se encontró el alumno");
+            }
+            if(monto <= 0){
+                throw new ServiceException("El monto debe ser mayor a 0");
+            }
+            if(monto > alumno.getDeuda()){
+                throw new ServiceException("El monto supera la deuda");
+            }
+            alumno.pagarDeuda(monto);
+            daoAlumno.modificar(alumno);
+        }
+        catch(DaoException ex){
+            throw new ServiceException(ex.getMessage());
+        }
+    }
 }

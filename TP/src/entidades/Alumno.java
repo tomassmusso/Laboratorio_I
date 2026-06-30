@@ -45,7 +45,7 @@ public class Alumno extends Usuario {
     // MÉTODOS
     public boolean puedeInscribirse(){
         int activas = 0;
-        for(Inscripcion inscripcion : inscripciones){
+        for(Inscripcion inscripcion:inscripciones){
             if(!inscripcion.isFinalizada()){
                 activas++;
             }
@@ -55,18 +55,6 @@ public class Alumno extends Usuario {
 
     public void inscribirseACurso(Inscripcion inscripcion){
         inscripciones.add(inscripcion);
-    }
-
-    public int contadorCursosInscriptos(){
-        int total = 0;
-        for(Inscripcion inscripcion:inscripciones){
-            total++;
-        }
-        return total;
-    }
-
-    public void aumentarDeuda(double monto){
-        this.deuda += monto;
     }
 
     public void pagarDeuda(double monto){

@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -25,7 +26,7 @@ public class AltaCurso extends JPanel {
     private JDateChooser jDateChooserInicioDescuento;
     private JDateChooser jDateChooserFinDescuento;
     private JTextField jTextFieldPrecioDescuento;
-    private JTextField jTextFieldProfesorId;
+    private JComboBox<Profesor> jComboProfesores;
     private JTextField jTextFieldCantidadParciales;
     private JTextField jTextFieldNotaAprobacion;
     private JTextField jTextFieldNotaPromocion;
@@ -40,6 +41,17 @@ public class AltaCurso extends JPanel {
 
     public void armarFormulario(){
         serviceAdministrador = new ServiceAdministrador();
+        try{
+            ArrayList<Profesor> profesores = serviceAdministrador.consultarTodosProfesores();
+            jComboProfesores = new JComboBox<>();
+            for(Profesor profesor:profesores){
+                jComboProfesores.addItem(profesor);
+            }
+        }
+        catch(ServiceException ex){
+            JOptionPane.showMessageDialog(null, "Error al cargar profesores" + ex.getMessage());
+        }
+
 
         JLabel titulo = new JLabel("Alta Curso", SwingConstants.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 20));
@@ -52,7 +64,6 @@ public class AltaCurso extends JPanel {
         jDateChooserInicioDescuento = new JDateChooser();
         jDateChooserFinDescuento = new JDateChooser();
         jTextFieldPrecioDescuento = new JTextField();
-        jTextFieldProfesorId = new JTextField();
         jTextFieldCantidadParciales = new JTextField();
         jTextFieldNotaAprobacion = new JTextField();
         jTextFieldNotaPromocion = new JTextField();
@@ -72,7 +83,8 @@ public class AltaCurso extends JPanel {
                 Date fechaInicioDescuento = jDateChooserInicioDescuento.getDate();
                 Date fechaFinDescuento = jDateChooserFinDescuento.getDate();
                 double precioDescuento = Double.parseDouble(jTextFieldPrecioDescuento.getText());
-                int profesorId = Integer.parseInt(jTextFieldProfesorId.getText());
+                Profesor profesorSeleccionado = (Profesor) jComboProfesores.getSelectedItem();
+                int profesorId = profesorSeleccionado.getId();
                 int cantidadParciales = Integer.parseInt(jTextFieldCantidadParciales.getText());
                 double notaAprobacion = Double.parseDouble(jTextFieldNotaAprobacion.getText());
                 double notaPromocion = Double.parseDouble(jTextFieldNotaPromocion.getText());
@@ -97,7 +109,7 @@ public class AltaCurso extends JPanel {
             }
         });
 
-        setLayout(new GridLayout(29, 1));
+        setLayout(new GridLayout(0, 1));
         add(titulo);
         add(new JLabel("Nombre:"));
         add(jTextFieldNombre);
@@ -115,8 +127,8 @@ public class AltaCurso extends JPanel {
         add(jDateChooserFinDescuento);
         add(new JLabel("Precio descuento:"));
         add(jTextFieldPrecioDescuento);
-        add(new JLabel("ID Profesor:"));
-        add(jTextFieldProfesorId);
+        add(new JLabel("Profesor:"));
+        add(jComboProfesores);
         add(new JLabel("Cantidad de parciales:"));
         add(jTextFieldCantidadParciales);
         add(new JLabel("Nota de aprobación:"));

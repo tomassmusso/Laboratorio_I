@@ -132,9 +132,7 @@ public class ListaAlumno extends JPanel {
                         mensaje += curso.getIdCurso() + " - " + curso.getNombre() + " - " + curso.getTurno() + " - Cupo: " + curso.getCupo() + " - Anotados: " + serviceCurso.cantidadInscriptos(curso.getIdCurso()) + "\n";
                     }
 
-                    JOptionPane.showMessageDialog(null, mensaje);
-
-                    String inputCurso = JOptionPane.showInputDialog("Ingrese el ID del curso:");
+                    String inputCurso = JOptionPane.showInputDialog(null, mensaje + "\nIngrese el ID del curso:");
 
                     int alumnoId = Integer.parseInt(inputAlumno);
                     int cursoId = Integer.parseInt(inputCurso);

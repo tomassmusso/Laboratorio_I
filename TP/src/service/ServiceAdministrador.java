@@ -182,7 +182,7 @@ public class ServiceAdministrador {
 
             ArrayList<Inscripcion> inscripcionesCurso = daoInscripcion.consultarPorCurso(cursoId);
             int anotados = 0;
-            for(Inscripcion iinscripcion:inscripcionesCurso){
+            for(Inscripcion inscripcion:inscripcionesCurso){
                 anotados++;
             }
             if(anotados >= curso.getCupo()){
@@ -190,6 +190,8 @@ public class ServiceAdministrador {
             }
             Inscripcion inscripcion = new Inscripcion(alumno, curso);
             daoInscripcion.agregar(inscripcion);
+            alumno.setDeuda(alumno.getDeuda() + curso.getPrecioActual());
+            daoAlumno.modificar(alumno);
             alumno.inscribirseACurso(inscripcion);
         }
         catch(DaoException ex){
