@@ -1,29 +1,66 @@
-INSERT INTO Administrador (nombre, apellido, mail, usuario, contraseña, sector) VALUES
-('Juan', 'Perez', 'juan.perez@mail.com', 'juan.perez', '1234', 'Academico'),
-('Maria', 'Gomez', 'maria.gomez@mail.com', 'maria.gomez', '1234', 'Gestion'),
-('Lucas', 'Fernandez', 'lucas.fernandez@mail.com', 'lucas.fernandez', '1234', 'Sistemas');
+INSERT INTO Administrador (nombre, apellido, mail, usuario, contraseña) VALUES
+('Juan', 'Pérez', 'juan.perez@campus.com', 'admin1', '1234'),
+('María', 'Gómez', 'maria.gomez@campus.com', 'admin2', '1234');
 
 INSERT INTO Profesor (nombre, apellido, mail, usuario, contraseña, departamento) VALUES
-('Carlos', 'Lopez', 'carlos.lopez@mail.com', 'carlos.lopez', '1234', 'Informatica'),
-('Ana', 'Martinez', 'ana.martinez@mail.com', 'ana.martinez', '1234', 'Matematica'),
-('Diego', 'Ruiz', 'diego.ruiz@mail.com', 'diego.ruiz', '1234', 'Fisica'),
-('Sofia', 'Diaz', 'sofia.diaz@mail.com', 'sofia.diaz', '1234', 'Datos'),
-('Martin', 'Sosa', 'martin.sosa@mail.com', 'martin.sosa', '1234', 'Software');
+('Carlos', 'Fernández', 'cfernandez@campus.com', 'cfernandez', '1234', 'Programación'),
+('Laura', 'Martínez', 'lmartinez@campus.com', 'lmartinez', '1234', 'Bases de Datos'),
+('Diego', 'Sosa', 'dsosa@campus.com', 'dsosa', '1234', 'Matemática'),
+('Ana', 'Ruiz', 'aruiz@campus.com', 'aruiz', '1234', 'Física'),
+('Martín', 'López', 'mlopez@campus.com', 'mlopez', '1234', 'Inteligencia Artificial');
 
 INSERT INTO Alumno (nombre, apellido, mail, usuario, contraseña, limiteCursos, deuda) VALUES
-('Tomas', 'Musso', 'tomas.musso@mail.com', 'tomas.musso', '1234', 3, 0),
-('Valentina', 'Rossi', 'valentina.rossi@mail.com', 'valentina.rossi', '1234', 2, 0),
-('Bruno', 'Alvarez', 'bruno.alvarez@mail.com', 'bruno.alvarez', '1234', 4, 0),
-('Camila', 'Vega', 'camila.vega@mail.com', 'camila.vega', '1234', 2, 0),
-('Nicolas', 'Herrera', 'nicolas.herrera', 'nicolas.herrera', '1234', 3, 0);
+('Tomás', 'Musso', 'tomas@gmail.com', 'tmusso', '1234', 2, 0),
+('Lucía', 'Benítez', 'lucia@gmail.com', 'lbenitez', '1234', 3, 0),
+('Nicolás', 'Suárez', 'nico@gmail.com', 'nsuarez', '1234', 2, 0),
+('Valentina', 'Rojas', 'vale@gmail.com', 'vrojas', '1234', 4, 0),
+('Santiago', 'Díaz', 'santi@gmail.com', 'sdiaz', '1234', 3, 0),
+('Camila', 'Moreno', 'camila@gmail.com', 'cmoreno', '1234', 2, 0),
+('Franco', 'Alonso', 'franco@gmail.com', 'falonso', '1234', 3, 0),
+('Milagros', 'Navarro', 'mili@gmail.com', 'mnavarro', '1234', 2, 0);
 
 INSERT INTO Curso (
 nombre, cupo, fechaInicio, fechaFin,
-precio, fechaInicioDescuento, fechaFinDescuento, precioDescuento,
-idProfesor, turno, cantidadParciales, notaAprobacion, notaPromocion
+precio, fechaInicioDescuento, fechaFinDescuento,
+precioDescuento, idProfesor, turno,
+cantidadParciales, notaAprobacion, notaPromocion
 ) VALUES
-('Java Inicial', 30, '2026-01-10', '2026-03-10', 50000, '2026-01-10', '2026-01-20', 40000, 1, 'Mañana', 2, 6.0, 8.5),
-('Python Data Science', 25, '2026-02-01', '2026-04-01', 60000, '2026-02-01', '2026-02-10', 50000, 4, 'Tarde', 3, 6.5, 8.0),
-('Bases de Datos', 20, '2026-03-01', '2026-05-01', 45000, '2026-03-01', '2026-03-10', 40000, 2, 'Noche', 2, 6.0, 7.5),
-('Fisica I', 40, '2026-01-15', '2026-03-15', 30000, '2026-01-15', '2026-01-25', 25000, 3, 'Mañana', 2, 6.0, 7.0),
-('Algoritmos Avanzados', 15, '2026-04-01', '2026-06-01', 70000, '2026-04-01', '2026-04-10', 65000, 5, 'Tarde', 3, 7.0, 9.0);
+
+('Java Inicial',30,'2026-08-01','2026-11-01',
+60000,'2026-07-20','2026-07-31',
+50000,1,'Mañana',2,6,8),
+
+('Python Data Science',25,'2026-08-05','2026-11-20',
+70000,'2026-07-20','2026-08-01',
+60000,5,'Tarde',3,6,8),
+
+('Bases de Datos',20,'2026-08-10','2026-11-10',
+55000,'2026-07-25','2026-08-05',
+48000,2,'Noche',2,6,7),
+
+('Física I',35,'2026-08-01','2026-10-30',
+45000,'2026-07-15','2026-07-31',
+40000,4,'Mañana',2,6,7),
+
+('Álgebra',40,'2026-08-03','2026-11-15',
+50000,'2026-07-20','2026-08-02',
+45000,3,'Tarde',2,6,8),
+
+('Machine Learning',20,'2026-09-01','2026-12-15',
+90000,'2026-08-20','2026-08-31',
+80000,5,'Noche',3,7,9);
+
+INSERT INTO Inscripcion (alumnoId, cursoId, notaFinal, finalizada) VALUES
+(1,1,NULL,FALSE),
+(1,3,NULL,FALSE),
+(2,1,NULL,FALSE),
+(2,2,NULL,FALSE),
+(2,6,NULL,FALSE),
+(3,2,NULL,FALSE),
+(4,4,NULL,FALSE),
+(4,5,NULL,FALSE),
+(5,3,NULL,FALSE),
+(6,6,NULL,FALSE),
+(7,1,NULL,FALSE),
+(7,5,NULL,FALSE),
+(8,2,NULL,FALSE);
